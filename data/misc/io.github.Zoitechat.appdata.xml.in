@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.Hexchat</id>
+  <id>io.github.Zoitechat</id>
   <name>ZoiteChat</name>
-  <launchable type="desktop-id">io.github.Hexchat.desktop</launchable>
+  <launchable type="desktop-id">io.github.Zoitechat.desktop</launchable>
   <developer_name>ZoiteChat</developer_name>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <translation type="gettext">zoitechat</translation>
   <summary>IRC Client</summary>
   <description>
-    <p>ZoiteChat is an easy to use yet extensible IRC Client. It allows you to securely join multiple networks and talk to users privately or in channels using a customizable interface. You can even transfer files.</p>
+    <p>ZoiteChat is an easy to use yet extensible IRC Client based on Hexchat. It allows you to securely join multiple networks and talk to users privately or in channels using a customizable interface. You can even transfer files.</p>
     <p>ZoiteChat supports features such as: DCC, SASL, proxies, spellcheck, alerts, logging, custom themes, and Python/Perl scripts.</p>
   </description>
-  <url type="homepage">http://zoitechat.github.io</url>
+  <url type="homepage">http://zoitechat.zoite.net</url>
   <url type="bugtracker">https://github.com/zoitechat/zoitechat</url>
-  <url type="donation">https://goo.gl/jESZvU</url>
-  <url type="help">https://zoitechat.readthedocs.io/en/latest/</url>
+  <url type="help">https://zoitechat.zoite.net/docs/en/latest/</url>
   <screenshots>
     <screenshot type="default">
       <image>http://i.imgur.com/tLMguQz.png</image>
@@ -23,10 +22,18 @@
     </screenshot>
   </screenshots>
   <provides>
-    <!-- Renamed from this -->
     <id>zoitechat.desktop</id>
   </provides>
   <releases>
+    <release date="2026-01-06" version="2.17.0">
+      <description>
+        <p>This is a minor release with small improvements and fixes:</p>
+        <ul>
+          <li>Start of Zoitechat code base. Forked from Hexchat.</li>
+          <li>Fixed flatpak python plugin causing freezing.</li>
+        </ul>
+      </description>
+    </release>
     <release date="2024-02-07" version="2.16.2">
       <description>
         <p>This is a minor release with small improvements and fixes:</p>
@@ -104,7 +111,7 @@
       <description>
         <p>This is largely a bug fix release though it has some large behind the scenes changes:</p>
         <ul>
-          <li>Rename data files to use *io.github.Hexchat* name</li>
+          <li>Rename data files to use *io.github.Zoitechat* name</li>
           <li>Add option (irc_reconnect_rejoin) to disable auto-rejoin on reconnect</li>
           <li>Add ability to set custom tray icon separate of app icon</li>
           <li>Fix Enchant 2.0+ support</li>

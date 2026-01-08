@@ -201,22 +201,29 @@ else:
 
 
 # There can be empty entries between non-empty ones so find the actual last value
-def wordlist_len(words):
-    for i in range(31, 0, -1):
-        if ffi.string(words[i]):
-            return i
 
+def _cstr(ptr):
+    """Safely convert a C char* (possibly NULL) to bytes."""
+    if ptr == ffi.NULL:
+        return b''
+    try:
+        return ffi.string(ptr)
+    except Exception:
+        return b''
+
+def wordlist_len(words):
+    # ZoiteChat passes a fixed-size array (typically 32) where unused entries may be NULL.
+    for i in range(31, 0, -1):
+        if _cstr(words[i]):
+            return i
     return 0
 
 
 def create_wordlist(words):
     size = wordlist_len(words)
-    return [__decode(ffi.string(words[i])) for i in range(1, size + 1)]
+    return [__decode(_cstr(words[i])) for i in range(1, size + 1)]
 
 
-# This function only exists for compat reasons with the C plugin
-# It turns the word list from print hooks into a word_eol list
-# This makes no sense to do...
 def create_wordeollist(words):
     words = reversed(words)
     accum = None
@@ -308,22 +315,43 @@ def _on_timer_hook(userdata):
     return 0
 
 
-@ffi.def_extern(error=3)
+@ffi.def_extern()
 def _on_say_command(word, word_eol, userdata):
-    channel = ffi.string(lib.zoitechat_get_info(lib.ph, b'channel'))
-    if channel == b'>>python<<':
-        python = ffi.string(word_eol[1])
-        lib.zoitechat_print(lib.ph, b'>>> ' + python)
-        exec_in_interp(__decode(python))
+    """Handle input in the special >>python<< tab.
+
+    This callback is wired via hook_command(b''), so it may be invoked for a wide range
+    of internal commands. It must never throw, and must default to EAT_NONE.
+    """
+    try:
+        channel = _cstr(lib.zoitechat_get_info(lib.ph, b'channel'))
+    except Exception:
+        return 0
+
+    if channel != b'>>python<<':
+        return 0
+
+    try:
+        python = _cstr(word_eol[1])
+    except Exception:
+        python = b''
+
+    if not python:
         return 1
 
-    return 0
+    # Don’t let exceptions here swallow core commands or wedge the UI.
+    try:
+        exec_in_interp(python)
+    except Exception:
+        # Best effort: surface the traceback in the python tab.
+        exc = traceback.format_exc().encode('utf-8', errors='replace')
+        lib.zoitechat_print(lib.ph, exc)
+    return 1
 
 
 def load_filename(filename):
     filename = os.path.expanduser(filename)
     if not os.path.isabs(filename):
-        configdir = __decode(ffi.string(lib.zoitechat_get_info(lib.ph, b'configdir')))
+        configdir = __decode(_cstr(lib.zoitechat_get_info(lib.ph, b'configdir')))
 
         filename = os.path.join(configdir, 'addons', filename)
 
@@ -366,7 +394,7 @@ def change_cwd(path):
 
 
 def autoload():
-    configdir = __decode(ffi.string(lib.zoitechat_get_info(lib.ph, b'configdir')))
+    configdir = __decode(_cstr(lib.zoitechat_get_info(lib.ph, b'configdir')))
     addondir = os.path.join(configdir, 'addons')
     try:
         with change_cwd(addondir):  # Maintaining old behavior
@@ -432,7 +460,7 @@ def exec_in_interp(python):
 
 @ffi.def_extern()
 def _on_load_command(word, word_eol, userdata):
-    filename = ffi.string(word[2])
+    filename = _cstr(word[2])
     if filename.endswith(b'.py'):
         load_filename(__decode(filename))
         return 3
@@ -442,7 +470,7 @@ def _on_load_command(word, word_eol, userdata):
 
 @ffi.def_extern()
 def _on_unload_command(word, word_eol, userdata):
-    filename = ffi.string(word[2])
+    filename = _cstr(word[2])
     if filename.endswith(b'.py'):
         unload_name(__decode(filename))
         return 3
@@ -452,7 +480,7 @@ def _on_unload_command(word, word_eol, userdata):
 
 @ffi.def_extern()
 def _on_reload_command(word, word_eol, userdata):
-    filename = ffi.string(word[2])
+    filename = _cstr(word[2])
     if filename.endswith(b'.py'):
         reload_name(__decode(filename))
         return 3
@@ -509,7 +537,7 @@ def _on_plugin_init(plugin_name, plugin_desc, plugin_version, arg, libdir):
     plugin_version[0] = PLUGIN_VERSION
 
     try:
-        libdir = __decode(ffi.string(libdir))
+        libdir = __decode(_cstr(libdir))
         modpath = os.path.join(libdir, '..', 'python')
         sys.path.append(os.path.abspath(modpath))
         zoitechat = importlib.import_module('zoitechat')

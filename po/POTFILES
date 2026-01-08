@@ -1,6 +1,6 @@
-data/misc/io.github.Hexchat.appdata.xml.in
-data/misc/io.github.Hexchat.desktop.in.in
-data/misc/io.github.Hexchat.ThemeManager.desktop.in
+data/misc/io.github.Zoitechat.appdata.xml.in
+data/misc/io.github.Zoitechat.desktop.in.in
+data/misc/io.github.Zoitechat.ThemeManager.desktop.in
 src/common/cfgfiles.c
 src/common/chanopt.c
 src/common/dcc.c
