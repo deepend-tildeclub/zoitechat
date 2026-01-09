@@ -28,14 +28,14 @@ zoitechat_gtk_sources = [
   'xtext.c'
 ]
 
-gtk_dep = dependency('gtk+-2.0', version: '>= 2.24.0')
+gtk_dep = dependency('gtk4', version: '>= 4.0.0')
 zoitechat_gtk_deps = [
   zoitechat_common_dep,
   libgmodule_dep, # used by libsexy
   gtk_dep
 ]
 
-if gtk_dep.get_pkgconfig_variable('target') == 'x11'
+if gtk_dep.get_pkgconfig_variable('target', default: '') == 'x11'
   zoitechat_gtk_deps += dependency('x11')
 endif
 
