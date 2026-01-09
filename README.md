@@ -1,4 +1,4 @@
-[![Ubuntu Build](https://github.com/ZoiteChat/zoitechat/actions/workflows/ubuntu-build.yml/badge.svg)](https://github.com/ZoiteChat/zoitechat/actions/workflows/ubuntu-build.yml)
+[![Debian Build](https://github.com/ZoiteChat/zoitechat/actions/workflows/debian-build.yml/badge.svg)](https://github.com/ZoiteChat/zoitechat/actions/workflows/debian-build.yml)
 [![Flatpak Build](https://github.com/ZoiteChat/zoitechat/actions/workflows/flatpak-build.yml/badge.svg)](https://github.com/ZoiteChat/zoitechat/actions/workflows/flatpak-build.yml)
 [![Windows Build](https://github.com/ZoiteChat/zoitechat/actions/workflows/windows-build.yml/badge.svg)](https://github.com/ZoiteChat/zoitechat/actions/workflows/windows-build.yml)
 
