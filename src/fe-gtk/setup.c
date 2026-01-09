@@ -695,7 +695,7 @@ setup_headlabel (GtkWidget *tab, int row, int col, char *text)
 
 	label = gtk_label_new (NULL);
 	gtk_label_set_markup (GTK_LABEL (label), buf);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (tab), label, col, col + 1, row, row + 1, 0, 0, 4, 0);
 }
 
@@ -716,7 +716,7 @@ setup_create_3oggle (GtkWidget *tab, int row, const setting *set)
 	int *offsets = (int *)set->list;
 
 	label = gtk_label_new (_(set->label));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	if (set->tooltip)
 	{
 		gtk_widget_set_tooltip_text (label, _(set->tooltip));
@@ -830,7 +830,7 @@ setup_create_spin (GtkWidget *table, int row, const setting *set)
 	char *text;
 
 	label = gtk_label_new (_(set->label));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 2, 3, row, row + 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 
@@ -895,7 +895,7 @@ setup_create_hscale (GtkWidget *table, int row, const setting *set)
 	GtkWidget *wid;
 
 	wid = gtk_label_new (_(set->label));
-	gtk_misc_set_alignment (GTK_MISC (wid), 0.0, 0.5);
+	gtkutil_set_alignment (wid, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), wid, 2, 3, row, row + 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 
@@ -954,7 +954,7 @@ setup_create_radio (GtkWidget *table, int row, const setting *set)
 	GSList *group;
 
 	wid = gtk_label_new (_(set->label));
-	gtk_misc_set_alignment (GTK_MISC (wid), 0.0, 0.5);
+	gtkutil_set_alignment (wid, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), wid, 2, 3, row, row + 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 
@@ -1017,7 +1017,7 @@ setup_create_id_menu (GtkWidget *table, char *label, int row, char *dest)
 	};
 
 	wid = gtk_label_new (label);
-	gtk_misc_set_alignment (GTK_MISC (wid), 0.0, 0.5);
+	gtkutil_set_alignment (wid, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), wid, 2, 3, row, row + 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 
@@ -1063,7 +1063,7 @@ setup_create_menu (GtkWidget *table, int row, const setting *set)
 	int i;
 
 	wid = gtk_label_new (_(set->label));
-	gtk_misc_set_alignment (GTK_MISC (wid), 0.0, 0.5);
+	gtkutil_set_alignment (wid, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), wid, 2, 3, row, row + 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 
@@ -1224,7 +1224,7 @@ setup_create_entry (GtkWidget *table, int row, const setting *set)
 	GtkWidget *wid, *bwid;
 
 	label = gtk_label_new (_(set->label));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 2, 3, row, row + 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 
@@ -1287,7 +1287,7 @@ setup_create_header (GtkWidget *table, int row, char *labeltext)
 
 	label = gtk_label_new (NULL);
 	gtk_label_set_markup (GTK_LABEL (label), buf);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), label, 0, 4, row, row + 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 5);
 }
@@ -1503,7 +1503,7 @@ setup_create_other_colorR (char *text, int num, int row, GtkWidget *tab)
 	GtkWidget *label;
 
 	label = gtk_label_new (text);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (tab), label, 5, 9, row, row + 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 	setup_create_color_button (tab, num, row, 9);
@@ -1515,7 +1515,7 @@ setup_create_other_color (char *text, int num, int row, GtkWidget *tab)
 	GtkWidget *label;
 
 	label = gtk_label_new (text);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (tab), label, 2, 3, row, row + 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 	setup_create_color_button (tab, num, row, 3);
@@ -1539,7 +1539,7 @@ setup_create_color_page (void)
 	setup_create_header (tab, 0, N_("Text Colors"));
 
 	label = gtk_label_new (_("mIRC colors:"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (tab), label, 2, 3, 1, 2,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 
@@ -1547,7 +1547,7 @@ setup_create_color_page (void)
 		setup_create_color_button (tab, i, 1, i+3);
 
 	label = gtk_label_new (_("Local colors:"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (tab), label, 2, 3, 2, 3,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0);
 
@@ -1574,7 +1574,7 @@ setup_create_color_page (void)
 	setup_create_header (tab, 15, N_("Color Stripping"));
 
 	/* label = gtk_label_new (_("Strip colors from:"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtkutil_set_alignment (label, 0.0, 0.5);
 	gtk_table_attach (GTK_TABLE (tab), label, 2, 3, 16, 17,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, LABEL_INDENT, 0); */
 
@@ -1807,7 +1807,7 @@ setup_create_sound_page (void)
 	gtk_table_attach (GTK_TABLE (table1), sound_label, 0, 1, 0, 1,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
-	gtk_misc_set_alignment (GTK_MISC (sound_label), 0, 0.5);
+	gtkutil_set_alignment (sound_label, 0, 0.5);
 
 	sndfile_entry = gtk_entry_new ();
 	g_signal_connect (G_OBJECT (sndfile_entry), "changed",
@@ -1855,8 +1855,8 @@ setup_add_page (const char *title, GtkWidget *book, GtkWidget *tab)
 	label = gtk_label_new (NULL);
 	g_snprintf (buf, sizeof (buf), "<b><big>%s</big></b>", _(title));
 	gtk_label_set_markup (GTK_LABEL (label), buf);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_misc_set_padding (GTK_MISC (label), 2, 1);
+	gtkutil_set_alignment (label, 0.0, 0.5);
+	gtkutil_set_padding (label, 2, 1);
 	gtk_box_pack_start (GTK_BOX (vvbox), label, FALSE, FALSE, 2);
 
 	gtk_container_add (GTK_CONTAINER (vvbox), tab);
