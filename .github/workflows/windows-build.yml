@@ -63,11 +63,22 @@ jobs:
           python -m pip install cffi
 
 
-      - name: Build
-        run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-          msbuild win32\zoitechat.sln /m /verbosity:minimal /p:Configuration=Release /p:Platform=${{ matrix.platform }}
-        shell: cmd
+          - name: Build
+            run: |
+              call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
+          
+              set "PYTHON_DIR=C:\gtk-build\python-3.8\${{ matrix.platform }}"
+              if not exist "%PYTHON_DIR%\libs\python38.lib" (
+                echo Missing %PYTHON_DIR%\libs\python38.lib
+                dir "%PYTHON_DIR%\libs"
+                exit /b 1
+              )
+
+              set "LIB=%PYTHON_DIR%\libs;%LIB%"
+              set "INCLUDE=%PYTHON_DIR%\include;%INCLUDE%"
+
+              msbuild win32\zoitechat.sln /m /verbosity:minimal /p:Configuration=Release /p:Platform=${{ matrix.platform }}
+            shell: cmd
 
       - name: Preparing Artifacts
         run: |
