@@ -47,6 +47,50 @@
 #define flag_b flag_wid[7]
 #define NUM_FLAG_WIDS 8
 
+#if GTK_CHECK_VERSION(4, 0, 0)
+static inline GtkAlign
+gtkutil_align_from_float (gfloat align)
+{
+	if (align <= 0.0f)
+	{
+		return GTK_ALIGN_START;
+	}
+	if (align >= 1.0f)
+	{
+		return GTK_ALIGN_END;
+	}
+	return GTK_ALIGN_CENTER;
+}
+
+static inline void
+gtkutil_set_alignment (GtkWidget *widget, gfloat xalign, gfloat yalign)
+{
+	gtk_widget_set_halign (widget, gtkutil_align_from_float (xalign));
+	gtk_widget_set_valign (widget, gtkutil_align_from_float (yalign));
+}
+
+static inline void
+gtkutil_set_padding (GtkWidget *widget, gint xpad, gint ypad)
+{
+	gtk_widget_set_margin_start (widget, xpad);
+	gtk_widget_set_margin_end (widget, xpad);
+	gtk_widget_set_margin_top (widget, ypad);
+	gtk_widget_set_margin_bottom (widget, ypad);
+}
+#else
+static inline void
+gtkutil_set_alignment (GtkWidget *widget, gfloat xalign, gfloat yalign)
+{
+	gtk_misc_set_alignment (GTK_MISC (widget), xalign, yalign);
+}
+
+static inline void
+gtkutil_set_padding (GtkWidget *widget, gint xpad, gint ypad)
+{
+	gtk_misc_set_padding (GTK_MISC (widget), xpad, ypad);
+}
+#endif
+
 #ifdef HAVE_GTK_MAC
 extern GtkosxApplication *osx_app;
 #endif

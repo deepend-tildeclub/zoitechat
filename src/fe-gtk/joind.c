@@ -152,7 +152,7 @@ joind_show_dialog (server *serv)
 	image1 = gtk_image_new_from_stock (GTK_STOCK_NETWORK, GTK_ICON_SIZE_LARGE_TOOLBAR);
 	gtk_widget_show (image1);
 	gtk_box_pack_start (GTK_BOX (hbox1), image1, FALSE, TRUE, 24);
-	gtk_misc_set_alignment (GTK_MISC (image1), 0.5f, 0.06f);
+	gtkutil_set_alignment (image1, 0.5f, 0.06f);
 
 	vbox2 = gtk_vbox_new (FALSE, 10);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 6);
@@ -166,18 +166,18 @@ joind_show_dialog (server *serv)
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtkutil_set_alignment (label, 0, 0.5);
 
 	label = gtk_label_new (_("In the server list window, no channel (chat room) has been entered to be automatically joined for this network."));
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtkutil_set_alignment (label, 0, 0.5);
 
 	label = gtk_label_new (_("What would you like to do next?"));
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtkutil_set_alignment (label, 0, 0.5);
 
 	serv->gui->joind_radio1 = radiobutton1 = gtk_radio_button_new_with_mnemonic (NULL, _("_Nothing, I'll join a channel later."));
 	gtk_widget_show (radiobutton1);
@@ -205,7 +205,7 @@ joind_show_dialog (server *serv)
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtkutil_set_alignment (label, 0, 0.5);
 
 	radiobutton3 = gtk_radio_button_new_with_mnemonic (NULL, _("O_pen the channel list."));
 	gtk_widget_show (radiobutton3);
@@ -218,7 +218,7 @@ joind_show_dialog (server *serv)
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtkutil_set_alignment (label, 0, 0.5);
 
 	serv->gui->joind_check = checkbutton1 = gtk_check_button_new_with_mnemonic (_("_Always show this dialog after connecting."));
 	if (prefs.hex_gui_join_dialog)

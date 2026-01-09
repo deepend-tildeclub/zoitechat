@@ -744,12 +744,12 @@ dcc_detail_label (char *text, GtkWidget *box, int num)
 	label = gtk_label_new (NULL);
 	g_snprintf (buf, sizeof (buf), "<b>%s</b>", text);
 	gtk_label_set_markup (GTK_LABEL (label), buf);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+	gtkutil_set_alignment (label, 0, 0);
 	gtk_table_attach (GTK_TABLE (box), label, 0, 1, 0 + num, 1 + num, GTK_FILL, GTK_FILL, 0, 0);
 
 	label = gtk_label_new (NULL);
 	gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+	gtkutil_set_alignment (label, 0, 0);
 	gtk_table_attach (GTK_TABLE (box), label, 1, 2, 0 + num, 1 + num, GTK_FILL, GTK_FILL, 0, 0);
 
 	return label;

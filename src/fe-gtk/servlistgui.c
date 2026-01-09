@@ -1277,7 +1277,7 @@ servlist_create_entry (GtkWidget *table, char *labeltext, int row,
 		*label_ret = label;
 	gtk_widget_show (label);
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row+1, GTK_FILL, 0, SERVLIST_X_PADDING, SERVLIST_Y_PADDING);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtkutil_set_alignment (label, 0, 0.5);
 
 	entry = gtk_entry_new ();
 	gtk_widget_set_tooltip_text (entry, tip);
@@ -1680,7 +1680,7 @@ bold_label (char *text)
 	g_snprintf (buf, sizeof (buf), "<b>%s</b>", text);
 	label = gtk_label_new (buf);
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtkutil_set_alignment (label, 0, 0.5);
 	gtk_widget_show (label);
 
 	return label;
@@ -1896,7 +1896,7 @@ servlist_open_edit (GtkWidget *parent, ircnet *net)
 
 	label_logintype = gtk_label_new (_("Login method:"));
 	gtk_table_attach (GTK_TABLE (table3), label_logintype, 0, 1, 10, 11, (GtkAttachOptions) (GTK_FILL), (GtkAttachOptions) (0), SERVLIST_X_PADDING, SERVLIST_Y_PADDING);
-	gtk_misc_set_alignment (GTK_MISC (label_logintype), 0, 0.5);
+	gtkutil_set_alignment (label_logintype, 0, 0.5);
 	combobox_logintypes = servlist_create_logintypecombo (notebook);
 	gtk_table_attach (GTK_TABLE (table3), combobox_logintypes, 1, 2, 10, 11, (GtkAttachOptions) (GTK_FILL), (GtkAttachOptions) (GTK_FILL), 4, 2);
 
@@ -1907,7 +1907,7 @@ servlist_open_edit (GtkWidget *parent, ircnet *net)
 
 	label34 = gtk_label_new (_("Character set:"));
 	gtk_table_attach (GTK_TABLE (table3), label34, 0, 1, 12, 13, (GtkAttachOptions) (GTK_FILL), (GtkAttachOptions) (0), SERVLIST_X_PADDING, SERVLIST_Y_PADDING);
-	gtk_misc_set_alignment (GTK_MISC (label34), 0, 0.5);
+	gtkutil_set_alignment (label34, 0, 0.5);
 	comboboxentry_charset = servlist_create_charsetcombo ();
 	gtk_table_attach (GTK_TABLE (table3), comboboxentry_charset, 1, 2, 12, 13, (GtkAttachOptions) (GTK_FILL), (GtkAttachOptions) (GTK_FILL), 4, 2);
 
@@ -2013,35 +2013,35 @@ servlist_open_networks (void)
 	gtk_table_attach (GTK_TABLE (table1), label3, 0, 1, 0, 1,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
-	gtk_misc_set_alignment (GTK_MISC (label3), 0, 0.5);
+	gtkutil_set_alignment (label3, 0, 0.5);
 
 	label4 = gtk_label_new (_("Second choice:"));
 	gtk_widget_show (label4);
 	gtk_table_attach (GTK_TABLE (table1), label4, 0, 1, 1, 2,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
-	gtk_misc_set_alignment (GTK_MISC (label4), 0, 0.5);
+	gtkutil_set_alignment (label4, 0, 0.5);
 
 	label5 = gtk_label_new (_("Third choice:"));
 	gtk_widget_show (label5);
 	gtk_table_attach (GTK_TABLE (table1), label5, 0, 1, 2, 3,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
-	gtk_misc_set_alignment (GTK_MISC (label5), 0, 0.5);
+	gtkutil_set_alignment (label5, 0, 0.5);
 
 	label6 = gtk_label_new_with_mnemonic (_("_User name:"));
 	gtk_widget_show (label6);
 	gtk_table_attach (GTK_TABLE (table1), label6, 0, 1, 3, 4,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
-	gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+	gtkutil_set_alignment (label6, 0, 0.5);
 
 	/* label7 = gtk_label_new_with_mnemonic (_("Rea_l name:"));
 	gtk_widget_show (label7);
 	gtk_table_attach (GTK_TABLE (table1), label7, 0, 1, 4, 5,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
-	gtk_misc_set_alignment (GTK_MISC (label7), 0, 0.5);*/
+	gtkutil_set_alignment (label7, 0, 0.5);*/
 
 	entry_nick1 = entry1 = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY (entry1), prefs.hex_irc_nick1);

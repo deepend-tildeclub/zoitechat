@@ -1221,7 +1221,7 @@ mg_open_quit_dialog (gboolean minimize_button)
 							(GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK | GTK_FILL),
 							(GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK), 0, 0);
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtkutil_set_alignment (label, 0, 0.5);
 
 	dialog_action_area1 = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
 	gtk_widget_show (dialog_action_area1);
