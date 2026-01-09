@@ -77,6 +77,64 @@ gtkutil_set_padding (GtkWidget *widget, gint xpad, gint ypad)
 	gtk_widget_set_margin_top (widget, ypad);
 	gtk_widget_set_margin_bottom (widget, ypad);
 }
+
+static inline void
+gtkutil_container_add_child (GtkWidget *container, GtkWidget *child)
+{
+	if (GTK_IS_WINDOW (container))
+	{
+		gtk_window_set_child (GTK_WINDOW (container), child);
+		return;
+	}
+	if (GTK_IS_BUTTON (container))
+	{
+		gtk_button_set_child (GTK_BUTTON (container), child);
+		return;
+	}
+	if (GTK_IS_SCROLLED_WINDOW (container))
+	{
+		gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (container), child);
+		return;
+	}
+	if (GTK_IS_FRAME (container))
+	{
+		gtk_frame_set_child (GTK_FRAME (container), child);
+		return;
+	}
+	if (GTK_IS_BOX (container))
+	{
+		gtk_box_append (GTK_BOX (container), child);
+		return;
+	}
+
+	gtk_widget_set_parent (child, container);
+}
+
+static inline void
+gtkutil_box_pack_start (GtkWidget *box, GtkWidget *child, gboolean expand,
+                        gboolean fill, guint padding)
+{
+	if (expand || fill)
+	{
+		gtk_widget_set_hexpand (child, TRUE);
+		gtk_widget_set_vexpand (child, TRUE);
+	}
+	if (padding > 0)
+	{
+		gtk_widget_set_margin_start (child, padding);
+		gtk_widget_set_margin_end (child, padding);
+		gtk_widget_set_margin_top (child, padding);
+		gtk_widget_set_margin_bottom (child, padding);
+	}
+	gtk_box_append (GTK_BOX (box), child);
+}
+
+static inline void
+gtkutil_box_pack_end (GtkWidget *box, GtkWidget *child, gboolean expand,
+                      gboolean fill, guint padding)
+{
+	gtkutil_box_pack_start (box, child, expand, fill, padding);
+}
 #else
 static inline void
 gtkutil_set_alignment (GtkWidget *widget, gfloat xalign, gfloat yalign)
@@ -88,6 +146,26 @@ static inline void
 gtkutil_set_padding (GtkWidget *widget, gint xpad, gint ypad)
 {
 	gtk_misc_set_padding (GTK_MISC (widget), xpad, ypad);
+}
+
+static inline void
+gtkutil_container_add_child (GtkWidget *container, GtkWidget *child)
+{
+	gtk_container_add (GTK_CONTAINER (container), child);
+}
+
+static inline void
+gtkutil_box_pack_start (GtkWidget *box, GtkWidget *child, gboolean expand,
+                        gboolean fill, guint padding)
+{
+	gtk_box_pack_start (GTK_BOX (box), child, expand, fill, padding);
+}
+
+static inline void
+gtkutil_box_pack_end (GtkWidget *box, GtkWidget *child, gboolean expand,
+                      gboolean fill, guint padding)
+{
+	gtk_box_pack_end (GTK_BOX (box), child, expand, fill, padding);
 }
 #endif
 
