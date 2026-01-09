@@ -339,7 +339,8 @@ fe_notify_ask (char *nick, char *networks)
 	GtkWidget *entry;
 	GtkWidget *label;
 	GtkWidget *wid;
-	GtkWidget *table;
+	GtkWidget *grid;
+	GtkWidget *content_area;
 	char *msg = _("Enter nickname to add:");
 	char buf[256];
 
@@ -351,38 +352,42 @@ fe_notify_ask (char *nick, char *networks)
 		gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent_window));
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 
-	table = gtk_table_new (2, 3, FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-	gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-	gtk_table_set_col_spacings (GTK_TABLE (table), 8);
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), table);
+	grid = gtk_grid_new ();
+	gtk_grid_set_row_spacing (GTK_GRID (grid), 3);
+	gtk_grid_set_column_spacing (GTK_GRID (grid), 8);
+	gtk_widget_set_margin_top (grid, 12);
+	gtk_widget_set_margin_bottom (grid, 12);
+	gtk_widget_set_margin_start (grid, 12);
+	gtk_widget_set_margin_end (grid, 12);
+	content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+	gtk_box_append (GTK_BOX (content_area), grid);
 
 	label = gtk_label_new (msg);
-	gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
+	gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
 
 	entry = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY (entry), nick);
 	g_signal_connect (G_OBJECT (entry), "activate",
 						 	G_CALLBACK (notifygui_add_enter), dialog);
-	gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 0, 1);
+	gtk_grid_attach (GTK_GRID (grid), entry, 1, 0, 1, 1);
 
 	g_signal_connect (G_OBJECT (dialog), "response",
 						   G_CALLBACK (notifygui_add_cb), entry);
 
 	label = gtk_label_new (_("Notify on these networks:"));
-	gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
+	gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
 
 	wid = gtk_entry_new ();
 	g_object_set_data (G_OBJECT (entry), "net", wid);
 	g_signal_connect (G_OBJECT (wid), "activate",
 						 	G_CALLBACK (notifygui_add_enter), dialog);
 	gtk_entry_set_text (GTK_ENTRY (wid), networks ? networks : "ALL");
-	gtk_table_attach_defaults (GTK_TABLE (table), wid, 1, 2, 2, 3);
+	gtk_grid_attach (GTK_GRID (grid), wid, 1, 2, 1, 1);
 
 	label = gtk_label_new (NULL);
 	g_snprintf (buf, sizeof (buf), "<i><span size=\"smaller\">%s</span></i>", _("Comma separated list of networks is accepted."));
 	gtk_label_set_markup (GTK_LABEL (label), buf);
-	gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 3, 4);
+	gtk_grid_attach (GTK_GRID (grid), label, 1, 3, 1, 1);
 
 	gtk_widget_set_visible (dialog, TRUE);
 }
