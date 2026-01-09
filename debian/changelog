@@ -249,7 +249,7 @@ hexchat (2.14.0-1) unstable; urgency=medium
     + Update build dependencies for the new upstream:
       - New build-deps: gettext, iso-codes, liblua5.3-dev, meson (>= 0.38).
       - Drop build-deps: dh-lua, intltool, libtool.
-      - Drop version restriction from libgtk2.0-dev (>= 2.10.0).
+      - Drop version restriction from libgtk-4-dev (>= 4.0.0).
     + Set Rules-Requires-Root:no.
   * d/changelog.txt: Update from upstream.
   * d/hexchat.install: Slightly update the paths.
