@@ -30,7 +30,7 @@
     <None Include="$(DepsRoot)\bin\fribidi-0.dll" />
     <None Include="$(DepsRoot)\bin\fontconfig.dll" />
     <None Include="$(DepsRoot)\bin\gdk_pixbuf-2.0-0.dll" />
-    <None Include="$(DepsRoot)\bin\gdk-win32-2.0.dll" />
+    <None Include="$(DepsRoot)\bin\gdk-4-1.dll" />
     <None Include="$(DepsRoot)\bin\gio-2.0-0.dll" />
     <None Include="$(DepsRoot)\bin\glib-2.0-0.dll" />
     <None Include="$(DepsRoot)\bin\gmodule-2.0-0.dll" />
@@ -38,7 +38,8 @@
     <None Include="$(DepsRoot)\bin\gspawn-win$(PlatformArchitecture)-helper.exe" />
     <None Include="$(DepsRoot)\bin\gspawn-win$(PlatformArchitecture)-helper-console.exe" />
     <None Include="$(DepsRoot)\bin\gthread-2.0-0.dll" />
-    <None Include="$(DepsRoot)\bin\gtk-win32-2.0.dll" />
+    <None Include="$(DepsRoot)\bin\gtk-4-1.dll" />
+    <None Include="$(DepsRoot)\bin\gsk-4-1.dll" />
     <None Include="$(DepsRoot)\bin\iconv.dll" />
     <None Include="$(DepsRoot)\bin\libcrypto*.dll" />
     <None Include="$(DepsRoot)\bin\libssl*.dll" />
@@ -66,8 +67,6 @@
     <Typelib Include="$(DepsRoot)\lib\girepository-1.0\*.typelib" />
     <None Include="$(Python3Path)\Lib\site-packages\_cffi_backend.*.pyd" />
 
-    <Engines Include="$(DepsRoot)\lib\gtk-2.0\i686-pc-vs14\engines\**\*" />
-
     <FontConfig Include="$(DepsRoot)\etc\fonts\*"/>
 
     <Share Include="share\**\*" />
@@ -82,7 +81,6 @@
   <Target Name="Build">
     <Copy SourceFiles="@(None)" DestinationFolder="$(ZoiteChatRel)" />
     <Copy SourceFiles="@(FontConfig)" DestinationFolder="$(ZoiteChatRel)\etc\fonts" />
-    <Copy SourceFiles="@(Engines)" DestinationFiles="@(Engines->'$(ZoiteChatRel)\lib\gtk-2.0\i686-pc-vs14\engines\%(RecursiveDir)%(Filename)%(Extension)')" />
     <Copy SourceFiles="@(Share)" DestinationFiles="@(Share->'$(ZoiteChatRel)\share\%(RecursiveDir)%(Filename)%(Extension)')" />
     <Copy SourceFiles="..\..\COPYING" DestinationFolder="$(ZoiteChatRel)\share\doc\zoitechat" />
     <Copy SourceFiles="$(WinSparklePath)\COPYING" DestinationFolder="$(ZoiteChatRel)\share\doc\WinSparkle" />
