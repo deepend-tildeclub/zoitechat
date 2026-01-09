@@ -139,34 +139,48 @@ gtkutil_check_file (char *filename, struct file_req *freq)
 static void
 gtkutil_file_req_done (GtkWidget * wid, struct file_req *freq)
 {
-	GSList *files, *cur;
 	GtkFileChooser *fs = GTK_FILE_CHOOSER (freq->dialog);
 
 	if (freq->flags & FRF_MULTIPLE)
 	{
-		files = cur = gtk_file_chooser_get_filenames (fs);
-		while (cur)
+		GListModel *files = gtk_file_chooser_get_files (fs);
+		guint count = g_list_model_get_n_items (files);
+		for (guint i = 0; i < count; i++)
 		{
-			gtkutil_check_file (cur->data, freq);
-			g_free (cur->data);
-			cur = cur->next;
+			GFile *file = g_list_model_get_item (files, i);
+			char *filename = g_file_get_path (file);
+			if (filename != NULL)
+				gtkutil_check_file (filename, freq);
+			g_free (filename);
+			g_object_unref (file);
 		}
-		if (files)
-			g_slist_free (files);
+		g_object_unref (files);
 	}
 	else
 	{
 		if (freq->flags & FRF_CHOOSEFOLDER)
 		{
-			gchar *filename = gtk_file_chooser_get_current_folder (fs);
-			gtkutil_check_file (filename, freq);
-			g_free (filename);
+			GFile *folder = gtk_file_chooser_get_current_folder (fs);
+			if (folder != NULL)
+			{
+				char *filename = g_file_get_path (folder);
+				if (filename != NULL)
+					gtkutil_check_file (filename, freq);
+				g_free (filename);
+				g_object_unref (folder);
+			}
 		}
 		else
 		{
-			gchar *filename = gtk_file_chooser_get_filename (fs);
-			gtkutil_check_file (gtk_file_chooser_get_filename (fs), freq);
-			g_free (filename);
+			GFile *file = gtk_file_chooser_get_file (fs);
+			if (file != NULL)
+			{
+				char *filename = g_file_get_path (file);
+				if (filename != NULL)
+					gtkutil_check_file (filename, freq);
+				g_free (filename);
+				g_object_unref (file);
+			}
 		}
 	}
 
@@ -204,8 +218,8 @@ gtkutil_file_req (GtkWindow *parent, const char *title, void *callback, void *us
 	{
 		dialog = gtk_file_chooser_dialog_new (title, NULL,
 												GTK_FILE_CHOOSER_ACTION_SAVE,
-												GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-												GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+												_("_Cancel"), GTK_RESPONSE_CANCEL,
+												_("_Save"), GTK_RESPONSE_ACCEPT,
 												NULL);
 
 		if (!(flags & FRF_NOASKOVERWRITE))
@@ -214,8 +228,8 @@ gtkutil_file_req (GtkWindow *parent, const char *title, void *callback, void *us
 	else
 		dialog = gtk_file_chooser_dialog_new (title, NULL,
 												GTK_FILE_CHOOSER_ACTION_OPEN,
-												GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-												GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
+												_("_Cancel"), GTK_RESPONSE_CANCEL,
+												_("_Open"), GTK_RESPONSE_ACCEPT,
 												NULL);
 
 	if (filter && filter[0] && (flags & FRF_FILTERISINITIAL))
