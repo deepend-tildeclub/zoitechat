@@ -1906,12 +1906,12 @@ create_icon_menu (char *labeltext, void *stock_name, int is_stock)
 	return item;
 }
 
-/* Override the default GTK2.4 handler, which would make menu
+/* Override the default GTK handler, which would make menu
    bindings not work when the menu-bar is hidden. */
 static gboolean
 menu_canacaccel (GtkWidget *widget, guint signal_id, gpointer user_data)
 {
-	/* GTK2.2 behaviour */
+	/* Legacy behavior */
 	return gtk_widget_is_sensitive (widget);
 }
 
