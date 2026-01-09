@@ -381,15 +381,15 @@ fe_get_str (char *msg, char *def, void *callback, void *userdata)
 	g_signal_connect (G_OBJECT (entry), "activate",
 						 	G_CALLBACK (gtkutil_str_enter), dialog);
 	gtk_entry_set_text (GTK_ENTRY (entry), def);
-	gtk_box_pack_end (GTK_BOX (hbox), entry, 0, 0, 0);
+	gtkutil_box_pack_end (hbox, entry, 0, 0, 0);
 
 	label = gtk_label_new (msg);
-	gtk_box_pack_end (GTK_BOX (hbox), label, 0, 0, 0);
+	gtkutil_box_pack_end (hbox, label, 0, 0, 0);
 
 	g_signal_connect (G_OBJECT (dialog), "response",
 						   G_CALLBACK (gtkutil_get_str_response), entry);
 
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), hbox);
+	gtkutil_container_add_child (gtk_dialog_get_content_area (GTK_DIALOG (dialog)), hbox);
 
 	gtk_widget_set_visible (dialog, TRUE);
 }
@@ -470,15 +470,15 @@ fe_get_int (char *msg, int def, void *callback, void *userdata)
 	gtk_adjustment_set_step_increment (adj, 1);
 	gtk_adjustment_changed (adj);
 	gtk_spin_button_set_value ((GtkSpinButton*)spin, def);
-	gtk_box_pack_end (GTK_BOX (hbox), spin, 0, 0, 0);
+	gtkutil_box_pack_end (hbox, spin, 0, 0, 0);
 
 	label = gtk_label_new (msg);
-	gtk_box_pack_end (GTK_BOX (hbox), label, 0, 0, 0);
+	gtkutil_box_pack_end (hbox, label, 0, 0, 0);
 
 	g_signal_connect (G_OBJECT (dialog), "response",
 						   G_CALLBACK (gtkutil_get_number_response), spin);
 
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), hbox);
+	gtkutil_container_add_child (gtk_dialog_get_content_area (GTK_DIALOG (dialog)), hbox);
 
 	gtk_widget_set_visible (dialog, TRUE);
 }
@@ -507,7 +507,7 @@ fe_get_bool (char *title, char *prompt, void *callback, void *userdata)
 	g_signal_connect (G_OBJECT (dialog), "response",
 		G_CALLBACK (gtkutil_get_bool_response), NULL);
 
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), prompt_label);
+	gtkutil_container_add_child (gtk_dialog_get_content_area (GTK_DIALOG (dialog)), prompt_label);
 
 	gtk_widget_set_visible (dialog, TRUE);
 }
@@ -526,18 +526,18 @@ gtkutil_button (GtkWidget *box, char *stock, char *tip, void *callback,
 		gtk_button_set_image (GTK_BUTTON (wid), gtk_image_new_from_stock (stock, GTK_ICON_SIZE_MENU));
 		gtk_button_set_use_underline (GTK_BUTTON (wid), TRUE);
 		if (box)
-			gtk_container_add (GTK_CONTAINER (box), wid);
+			gtkutil_container_add_child (box, wid);
 	}
 	else
 	{
 		bbox = gtk_hbox_new (0, 0);
-		gtk_container_add (GTK_CONTAINER (wid), bbox);
+		gtkutil_container_add_child (wid, bbox);
 		gtk_widget_set_visible (bbox, TRUE);
 
 		img = gtk_image_new_from_stock (stock, GTK_ICON_SIZE_MENU);
-		gtk_container_add (GTK_CONTAINER (bbox), img);
+		gtkutil_container_add_child (bbox, img);
 		gtk_widget_set_visible (img, TRUE);
-		gtk_box_pack_start (GTK_BOX (box), wid, 0, 0, 0);
+		gtkutil_box_pack_start (box, wid, 0, 0, 0);
 	}
 
 	g_signal_connect (G_OBJECT (wid), "clicked",
@@ -553,7 +553,7 @@ void
 gtkutil_label_new (char *text, GtkWidget * box)
 {
 	GtkWidget *label = gtk_label_new (text);
-	gtk_container_add (GTK_CONTAINER (box), label);
+	gtkutil_container_add_child (box, label);
 	gtk_widget_set_visible (label, TRUE);
 }
 
@@ -563,7 +563,7 @@ gtkutil_entry_new (int max, GtkWidget * box, void *callback,
 {
 	GtkWidget *entry = gtk_entry_new ();
 	gtk_entry_set_max_length (GTK_ENTRY (entry), max);
-	gtk_container_add (GTK_CONTAINER (box), entry);
+	gtkutil_container_add_child (box, entry);
 	if (callback)
 		g_signal_connect (G_OBJECT (entry), "changed",
 								G_CALLBACK (callback), userdata);
@@ -659,7 +659,7 @@ gtkutil_treeview_new (GtkWidget *box, GtkTreeModel *model,
 	char *title, *attr;
 
 	win = gtk_scrolled_window_new (0, 0);
-	gtk_container_add (GTK_CONTAINER (box), win);
+	gtkutil_container_add_child (box, win);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (win),
 											  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_widget_set_visible (win, TRUE);
@@ -667,7 +667,7 @@ gtkutil_treeview_new (GtkWidget *box, GtkTreeModel *model,
 	view = gtk_tree_view_new_with_model (model);
 	/* the view now has a ref on the model, we can unref it */
 	g_object_unref (G_OBJECT (model));
-	gtk_container_add (GTK_CONTAINER (win), view);
+	gtkutil_container_add_child (win, view);
 
 	va_start (args, mapper);
 	for (col_id = va_arg (args, int); col_id != -1; col_id = va_arg (args, int))
