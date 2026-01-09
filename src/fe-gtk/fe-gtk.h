@@ -70,12 +70,18 @@ gtkutil_set_alignment (GtkWidget *widget, gfloat xalign, gfloat yalign)
 }
 
 static inline void
-gtkutil_set_padding (GtkWidget *widget, gint xpad, gint ypad)
+gtkutil_set_margins (GtkWidget *widget, gint xpad, gint ypad)
 {
 	gtk_widget_set_margin_start (widget, xpad);
 	gtk_widget_set_margin_end (widget, xpad);
 	gtk_widget_set_margin_top (widget, ypad);
 	gtk_widget_set_margin_bottom (widget, ypad);
+}
+
+static inline void
+gtkutil_set_padding (GtkWidget *widget, gint xpad, gint ypad)
+{
+	gtkutil_set_margins (widget, xpad, ypad);
 }
 
 static inline void
@@ -121,10 +127,7 @@ gtkutil_box_pack_start (GtkWidget *box, GtkWidget *child, gboolean expand,
 	}
 	if (padding > 0)
 	{
-		gtk_widget_set_margin_start (child, padding);
-		gtk_widget_set_margin_end (child, padding);
-		gtk_widget_set_margin_top (child, padding);
-		gtk_widget_set_margin_bottom (child, padding);
+		gtkutil_set_margins (child, padding, padding);
 	}
 	gtk_box_append (GTK_BOX (box), child);
 }
