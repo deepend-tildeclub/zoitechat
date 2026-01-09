@@ -263,5 +263,5 @@ plugingui_open (void)
 
 	fe_pluginlist_update ();
 
-	gtk_widget_show_all (plugin_window);
+	gtk_widget_set_visible (plugin_window, TRUE);
 }

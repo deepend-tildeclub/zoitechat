@@ -746,7 +746,7 @@ servlist_edit_cb (GtkWidget *but, gpointer none)
 						 	G_CALLBACK (servlist_editwin_delete_cb), 0);
 	g_signal_connect (G_OBJECT (edit_win), "configure_event",
 							G_CALLBACK (servlist_edit_configure_cb), 0);
-	gtk_widget_show (edit_win);
+	gtk_widget_set_visible (edit_win, TRUE);
 }
 
 static void
@@ -770,7 +770,7 @@ servlist_deletenet_cb (GtkWidget *item, ircnet *net)
 	g_signal_connect (dialog, "response",
 							G_CALLBACK (servlist_deletenetdialog_cb), net);
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-	gtk_widget_show (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void
@@ -1261,7 +1261,7 @@ servlist_create_check (int num, int state, GtkWidget *table, int row, int col, c
 	g_signal_connect (G_OBJECT (but), "toggled",
 							G_CALLBACK (servlist_check_cb), GINT_TO_POINTER (num));
 	gtk_table_attach (GTK_TABLE (table), but, col, col+2, row, row+1, GTK_FILL|GTK_EXPAND, 0, SERVLIST_X_PADDING, SERVLIST_Y_PADDING);
-	gtk_widget_show (but);
+	gtk_widget_set_visible (but, TRUE);
 
 	return but;
 }
@@ -1275,13 +1275,13 @@ servlist_create_entry (GtkWidget *table, char *labeltext, int row,
 	label = gtk_label_new_with_mnemonic (labeltext);
 	if (label_ret)
 		*label_ret = label;
-	gtk_widget_show (label);
+	gtk_widget_set_visible (label, TRUE);
 	gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row+1, GTK_FILL, 0, SERVLIST_X_PADDING, SERVLIST_Y_PADDING);
 	gtkutil_set_alignment (label, 0, 0.5);
 
 	entry = gtk_entry_new ();
 	gtk_widget_set_tooltip_text (entry, tip);
-	gtk_widget_show (entry);
+	gtk_widget_set_visible (entry, TRUE);
 	gtk_entry_set_text (GTK_ENTRY (entry), def ? def : "");
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
@@ -1681,7 +1681,7 @@ bold_label (char *text)
 	label = gtk_label_new (buf);
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
 	gtkutil_set_alignment (label, 0, 0.5);
-	gtk_widget_show (label);
+	gtk_widget_set_visible (label, TRUE);
 
 	return label;
 }
@@ -1934,9 +1934,9 @@ servlist_open_edit (GtkWidget *parent, ircnet *net)
 	gtk_widget_grab_focus (button10);
 	gtk_widget_grab_default (button10);
 
-	gtk_widget_show_all (editwindow);
+	gtk_widget_set_visible (editwindow, TRUE);
 
-	/* We can't set the active tab without child elements being shown, so this must be *after* gtk_widget_show()s! */
+	/* We can't set the active tab without child elements being visible, so this must be *after* gtk_widget_set_visible() calls! */
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), netedit_active_tab);
 
 	/* We need to connect this *after* setting the active tab so that the value doesn't get overriden. */
@@ -1995,49 +1995,49 @@ servlist_open_networks (void)
 		gtk_window_set_transient_for (GTK_WINDOW (servlist), GTK_WINDOW (current_sess->gui->window));
 
 	vbox1 = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox1);
+	gtk_widget_set_visible (vbox1, TRUE);
 	gtk_container_add (GTK_CONTAINER (servlist), vbox1);
 
 	label2 = bold_label (_("User Information"));
 	gtk_box_pack_start (GTK_BOX (vbox1), label2, FALSE, FALSE, 0);
 
 	table1 = gtk_table_new (5, 2, FALSE);
-	gtk_widget_show (table1);
+	gtk_widget_set_visible (table1, TRUE);
 	gtk_box_pack_start (GTK_BOX (vbox1), table1, FALSE, FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (table1), 8);
 	gtk_table_set_row_spacings (GTK_TABLE (table1), 2);
 	gtk_table_set_col_spacings (GTK_TABLE (table1), 4);
 
 	label3 = gtk_label_new_with_mnemonic (_("_Nick name:"));
-	gtk_widget_show (label3);
+	gtk_widget_set_visible (label3, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), label3, 0, 1, 0, 1,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
 	gtkutil_set_alignment (label3, 0, 0.5);
 
 	label4 = gtk_label_new (_("Second choice:"));
-	gtk_widget_show (label4);
+	gtk_widget_set_visible (label4, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), label4, 0, 1, 1, 2,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
 	gtkutil_set_alignment (label4, 0, 0.5);
 
 	label5 = gtk_label_new (_("Third choice:"));
-	gtk_widget_show (label5);
+	gtk_widget_set_visible (label5, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), label5, 0, 1, 2, 3,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
 	gtkutil_set_alignment (label5, 0, 0.5);
 
 	label6 = gtk_label_new_with_mnemonic (_("_User name:"));
-	gtk_widget_show (label6);
+	gtk_widget_set_visible (label6, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), label6, 0, 1, 3, 4,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
 	gtkutil_set_alignment (label6, 0, 0.5);
 
 	/* label7 = gtk_label_new_with_mnemonic (_("Rea_l name:"));
-	gtk_widget_show (label7);
+	gtk_widget_set_visible (label7, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), label7, 0, 1, 4, 5,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
@@ -2045,55 +2045,55 @@ servlist_open_networks (void)
 
 	entry_nick1 = entry1 = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY (entry1), prefs.hex_irc_nick1);
-	gtk_widget_show (entry1);
+	gtk_widget_set_visible (entry1, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), entry1, 1, 2, 0, 1,
 							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
 
 	entry_nick2 = entry2 = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY (entry2), prefs.hex_irc_nick2);
-	gtk_widget_show (entry2);
+	gtk_widget_set_visible (entry2, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), entry2, 1, 2, 1, 2,
 							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
 
 	entry_nick3 = entry3 = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY (entry3), prefs.hex_irc_nick3);
-	gtk_widget_show (entry3);
+	gtk_widget_set_visible (entry3, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), entry3, 1, 2, 2, 3,
 							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
 
 	entry_guser = entry4 = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY (entry4), prefs.hex_irc_user_name);
-	gtk_widget_show (entry4);
+	gtk_widget_set_visible (entry4, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), entry4, 1, 2, 3, 4,
 							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
 
 	/* entry_greal = entry5 = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY (entry5), prefs.hex_irc_real_name);
-	gtk_widget_show (entry5);
+	gtk_widget_set_visible (entry5, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), entry5, 1, 2, 4, 5,
 							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0); */
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox2);
+	gtk_widget_set_visible (vbox2, TRUE);
 	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, TRUE, TRUE, 0);
 
 	label1 = bold_label (_("Networks"));
 	gtk_box_pack_start (GTK_BOX (vbox2), label1, FALSE, FALSE, 0);
 
 	table4 = gtk_table_new (2, 2, FALSE);
-	gtk_widget_show (table4);
+	gtk_widget_set_visible (table4, TRUE);
 	gtk_box_pack_start (GTK_BOX (vbox2), table4, TRUE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (table4), 8);
 	gtk_table_set_row_spacings (GTK_TABLE (table4), 2);
 	gtk_table_set_col_spacings (GTK_TABLE (table4), 3);
 
 	scrolledwindow3 = gtk_scrolled_window_new (NULL, NULL);
-	gtk_widget_show (scrolledwindow3);
+	gtk_widget_set_visible (scrolledwindow3, TRUE);
 	gtk_table_attach (GTK_TABLE (table4), scrolledwindow3, 0, 1, 0, 1,
 							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
@@ -2107,7 +2107,7 @@ servlist_open_networks (void)
 
 	networks_tree = treeview_networks = gtk_tree_view_new_with_model (model);
 	g_object_unref (model);
-	gtk_widget_show (treeview_networks);
+	gtk_widget_set_visible (treeview_networks, TRUE);
 	gtk_container_add (GTK_CONTAINER (scrolledwindow3), treeview_networks);
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview_networks),
 												  FALSE);
@@ -2127,7 +2127,7 @@ servlist_open_networks (void)
 	gtk_table_attach (GTK_TABLE (table4), hbox, 0, 2, 1, 2,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
-	gtk_widget_show (hbox);
+	gtk_widget_set_visible (hbox, TRUE);
 
 	checkbutton_skip =
 		gtk_check_button_new_with_mnemonic (_("Skip network list on startup"));
@@ -2136,7 +2136,7 @@ servlist_open_networks (void)
 	gtk_container_add (GTK_CONTAINER (hbox), checkbutton_skip);
 	g_signal_connect (G_OBJECT (checkbutton_skip), "toggled",
 							G_CALLBACK (no_servlist), 0);
-	gtk_widget_show (checkbutton_skip);
+	gtk_widget_set_visible (checkbutton_skip, TRUE);
 
 	checkbutton_fav =
 		gtk_check_button_new_with_mnemonic (_("Show favorites only"));
@@ -2145,12 +2145,12 @@ servlist_open_networks (void)
 	gtk_container_add (GTK_CONTAINER (hbox), checkbutton_fav);
 	g_signal_connect (G_OBJECT (checkbutton_fav), "toggled",
 							G_CALLBACK (fav_servlist), 0);
-	gtk_widget_show (checkbutton_fav);
+	gtk_widget_set_visible (checkbutton_fav, TRUE);
 
 	vbuttonbox2 = gtk_vbutton_box_new ();
 	gtk_box_set_spacing (GTK_BOX (vbuttonbox2), 3);
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (vbuttonbox2), GTK_BUTTONBOX_START);
-	gtk_widget_show (vbuttonbox2);
+	gtk_widget_set_visible (vbuttonbox2, TRUE);
 	gtk_table_attach (GTK_TABLE (table4), vbuttonbox2, 1, 2, 0, 1,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (GTK_FILL), 0, 0);
@@ -2158,21 +2158,21 @@ servlist_open_networks (void)
 	button_add = gtk_button_new_from_stock ("gtk-add");
 	g_signal_connect (G_OBJECT (button_add), "clicked",
 							G_CALLBACK (servlist_addnet_cb), networks_tree);
-	gtk_widget_show (button_add);
+	gtk_widget_set_visible (button_add, TRUE);
 	gtk_container_add (GTK_CONTAINER (vbuttonbox2), button_add);
 	gtk_widget_set_can_default (button_add, TRUE);
 
 	button_remove = gtk_button_new_from_stock ("gtk-remove");
 	g_signal_connect (G_OBJECT (button_remove), "clicked",
 							G_CALLBACK (servlist_deletenet_cb), 0);
-	gtk_widget_show (button_remove);
+	gtk_widget_set_visible (button_remove, TRUE);
 	gtk_container_add (GTK_CONTAINER (vbuttonbox2), button_remove);
 	gtk_widget_set_can_default (button_remove, TRUE);
 
 	button_edit = gtk_button_new_with_mnemonic (_("_Edit..."));
 	g_signal_connect (G_OBJECT (button_edit), "clicked",
 							G_CALLBACK (servlist_edit_cb), 0);
-	gtk_widget_show (button_edit);
+	gtk_widget_set_visible (button_edit, TRUE);
 	gtk_container_add (GTK_CONTAINER (vbuttonbox2), button_edit);
 	gtk_widget_set_can_default (button_edit, TRUE);
 
@@ -2181,7 +2181,7 @@ servlist_open_networks (void)
 				"Use Shift+Up and Shift+Down keys to move a row."));
 	g_signal_connect (G_OBJECT (button_sort), "clicked",
 							G_CALLBACK (servlist_sort), 0);
-	gtk_widget_show (button_sort);
+	gtk_widget_set_visible (button_sort, TRUE);
 	gtk_container_add (GTK_CONTAINER (vbuttonbox2), button_sort);
 	gtk_widget_set_can_default (button_sort, TRUE);
 
@@ -2189,21 +2189,21 @@ servlist_open_networks (void)
 	gtk_widget_set_tooltip_text (button_sort, _("Mark or unmark this network as a favorite."));
 	g_signal_connect (G_OBJECT (button_sort), "clicked",
 							G_CALLBACK (servlist_favor), 0);
-	gtk_widget_show (button_sort);
+	gtk_widget_set_visible (button_sort, TRUE);
 	gtk_container_add (GTK_CONTAINER (vbuttonbox2), button_sort);
 	gtk_widget_set_can_default (button_sort, TRUE);
 
 	hseparator1 = gtk_hseparator_new ();
-	gtk_widget_show (hseparator1);
+	gtk_widget_set_visible (hseparator1, TRUE);
 	gtk_box_pack_start (GTK_BOX (vbox1), hseparator1, FALSE, TRUE, 4);
 
 	hbuttonbox1 = gtk_hbutton_box_new ();
-	gtk_widget_show (hbuttonbox1);
+	gtk_widget_set_visible (hbuttonbox1, TRUE);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbuttonbox1, FALSE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (hbuttonbox1), 8);
 
 	button_close = gtk_button_new_from_stock ("gtk-close");
-	gtk_widget_show (button_close);
+	gtk_widget_set_visible (button_close, TRUE);
 	g_signal_connect (G_OBJECT (button_close), "clicked",
 							G_CALLBACK (servlist_close_cb), 0);
 	gtk_container_add (GTK_CONTAINER (hbuttonbox1), button_close);
@@ -2258,5 +2258,5 @@ fe_serverlist_open (session *sess)
 	g_signal_connect (G_OBJECT (networks_tree), "key_press_event",
 							G_CALLBACK (servlist_net_keypress_cb), networks_tree);
 
-	gtk_widget_show (serverlist_win);
+	gtk_widget_set_visible (serverlist_win, TRUE);
 }

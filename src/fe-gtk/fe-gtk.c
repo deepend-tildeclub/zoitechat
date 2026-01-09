@@ -481,7 +481,7 @@ fe_message (char *msg, int flags)
 							G_CALLBACK (gtk_widget_destroy), 0);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-	gtk_widget_show (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 
 	if (flags & FE_MSG_WAIT)
 		gtk_dialog_run (GTK_DIALOG (dialog));
@@ -857,7 +857,7 @@ fe_ctrl_gui (session *sess, fe_gui_action action, int arg)
 	case FE_GUI_HIDE:
 		gtk_widget_hide (sess->gui->window); break;
 	case FE_GUI_SHOW:
-		gtk_widget_show (sess->gui->window);
+		gtk_widget_set_visible (sess->gui->window, TRUE);
 		gtk_window_present (GTK_WINDOW (sess->gui->window));
 		break;
 	case FE_GUI_FOCUS:

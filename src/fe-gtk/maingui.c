@@ -266,7 +266,7 @@ mg_set_access_icon (session_gui *gui, GdkPixbuf *pix, gboolean away)
 	{
 		gui->op_xpm = gtk_image_new_from_pixbuf (pix);
 		gtk_box_pack_start (GTK_BOX (gui->nick_box), gui->op_xpm, 0, 0, 0);
-		gtk_widget_show (gui->op_xpm);
+		gtk_widget_set_visible (gui->op_xpm, TRUE);
 	}
 
 	mg_set_myself_away (gui, away);
@@ -578,7 +578,7 @@ mg_progressbar_create (session_gui *gui)
 {
 	gui->bar = gtk_progress_bar_new ();
 	gtk_box_pack_start (GTK_BOX (gui->nick_box), gui->bar, 0, 0, 0);
-	gtk_widget_show (gui->bar);
+	gtk_widget_set_visible (gui->bar, TRUE);
 	gui->bartag = fe_timeout_add (50, mg_progressbar_update, gui->bar);
 }
 
@@ -713,7 +713,7 @@ mg_hide_empty_pane (GtkPaned *pane)
 		return;
 	}
 
-	gtk_widget_show (GTK_WIDGET (pane));
+	gtk_widget_set_visible (GTK_WIDGET (pane), TRUE);
 }
 
 static void
@@ -736,7 +736,7 @@ mg_userlist_showhide (session *sess, int show)
 
 	if (show)
 	{
-		gtk_widget_show (gui->user_box);
+		gtk_widget_set_visible (gui->user_box, TRUE);
 		gui->ul_hidden = 0;
 
 		gtk_widget_get_allocation (gui->hpane_right, &allocation);
@@ -836,7 +836,7 @@ mg_populate (session *sess)
 	{
 	case SESS_DIALOG:
 		/* show the dialog buttons */
-		gtk_widget_show (gui->dialogbutton_box);
+		gtk_widget_set_visible (gui->dialogbutton_box, TRUE);
 		/* hide the chan-mode buttons */
 		gtk_widget_hide (gui->topicbutton_box);
 		/* hide the userlist */
@@ -845,11 +845,11 @@ mg_populate (session *sess)
 		gtk_editable_set_editable (GTK_EDITABLE (gui->topic_entry), FALSE);
 		/* might be hidden from server tab */
 		if (prefs.hex_gui_topicbar)
-			gtk_widget_show (gui->topic_bar);
+			gtk_widget_set_visible (gui->topic_bar, TRUE);
 		break;
 	case SESS_SERVER:
 		if (prefs.hex_gui_mode_buttons)
-			gtk_widget_show (gui->topicbutton_box);
+			gtk_widget_set_visible (gui->topicbutton_box, TRUE);
 		/* hide the dialog buttons */
 		gtk_widget_hide (gui->dialogbutton_box);
 		/* hide the userlist */
@@ -861,13 +861,13 @@ mg_populate (session *sess)
 		/* hide the dialog buttons */
 		gtk_widget_hide (gui->dialogbutton_box);
 		if (prefs.hex_gui_mode_buttons)
-			gtk_widget_show (gui->topicbutton_box);
+			gtk_widget_set_visible (gui->topicbutton_box, TRUE);
 		/* show the userlist */
 		mg_decide_userlist (sess, FALSE);
 		/* let the topic be editted */
 		gtk_editable_set_editable (GTK_EDITABLE (gui->topic_entry), TRUE);
 		if (prefs.hex_gui_topicbar)
-			gtk_widget_show (gui->topic_bar);
+			gtk_widget_set_visible (gui->topic_bar, TRUE);
 	}
 
 	/* move to THE irc tab */
@@ -920,7 +920,7 @@ mg_populate (session *sess)
 		if (sess->server && strchr (sess->server->chanmodes, chan_flags[i]) == NULL)
 			gtk_widget_hide (sess->gui->flag_wid[i]);
 		else
-			gtk_widget_show (sess->gui->flag_wid[i]);
+			gtk_widget_set_visible (sess->gui->flag_wid[i], TRUE);
 
 		/* Update state */
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gui->flag_wid[i]),
@@ -1093,7 +1093,7 @@ mg_tab_close (session *sess)
 		{
 			gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER_ON_PARENT);		
 		}
-		gtk_widget_show (dialog);
+		gtk_widget_set_visible (dialog, TRUE);
 	}
 }
 
@@ -1114,7 +1114,7 @@ mg_create_icon_item (char *label, char *stock, GtkWidget *menu,
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate", G_CALLBACK (callback),
 							userdata);
-	gtk_widget_show (item);
+	gtk_widget_set_visible (item, TRUE);
 }
 
 static int
@@ -1187,23 +1187,23 @@ mg_open_quit_dialog (gboolean minimize_button)
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
 	dialog_vbox1 = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-	gtk_widget_show (dialog_vbox1);
+	gtk_widget_set_visible (dialog_vbox1, TRUE);
 
 	table1 = gtk_table_new (2, 2, FALSE);
-	gtk_widget_show (table1);
+	gtk_widget_set_visible (table1, TRUE);
 	gtk_box_pack_start (GTK_BOX (dialog_vbox1), table1, TRUE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (table1), 6);
 	gtk_table_set_row_spacings (GTK_TABLE (table1), 12);
 	gtk_table_set_col_spacings (GTK_TABLE (table1), 12);
 
 	image = gtk_image_new_from_stock ("gtk-dialog-warning", GTK_ICON_SIZE_DIALOG);
-	gtk_widget_show (image);
+	gtk_widget_set_visible (image, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), image, 0, 1, 0, 1,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (GTK_FILL), 0, 0);
 
 	checkbutton1 = gtk_check_button_new_with_mnemonic (_("Don't ask next time."));
-	gtk_widget_show (checkbutton1);
+	gtk_widget_set_visible (checkbutton1, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), checkbutton1, 0, 2, 1, 2,
 							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 							(GtkAttachOptions) (0), 0, 4);
@@ -1216,7 +1216,7 @@ mg_open_quit_dialog (gboolean minimize_button)
 	g_free (connecttext);
 	label = gtk_label_new (text);
 	g_free (text);
-	gtk_widget_show (label);
+	gtk_widget_set_visible (label, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), label, 1, 2, 0, 1,
 							(GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK | GTK_FILL),
 							(GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK), 0, 0);
@@ -1224,28 +1224,28 @@ mg_open_quit_dialog (gboolean minimize_button)
 	gtkutil_set_alignment (label, 0, 0.5);
 
 	dialog_action_area1 = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
-	gtk_widget_show (dialog_action_area1);
+	gtk_widget_set_visible (dialog_action_area1, TRUE);
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area1),
 										GTK_BUTTONBOX_END);
 
 	if (minimize_button && gtkutil_tray_icon_supported (GTK_WINDOW(dialog)))
 	{
 		button = gtk_button_new_with_mnemonic (_("_Minimize to Tray"));
-		gtk_widget_show (button);
+		gtk_widget_set_visible (button, TRUE);
 		gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, 1);
 	}
 
 	button = gtk_button_new_from_stock ("gtk-cancel");
-	gtk_widget_show (button);
+	gtk_widget_set_visible (button, TRUE);
 	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button,
 											GTK_RESPONSE_CANCEL);
 	gtk_widget_grab_focus (button);
 
 	button = gtk_button_new_from_stock ("gtk-quit");
-	gtk_widget_show (button);
+	gtk_widget_set_visible (button, TRUE);
 	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, 0);
 
-	gtk_widget_show (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 
 	switch (gtk_dialog_run (GTK_DIALOG (dialog)))
 	{
@@ -1355,7 +1355,7 @@ mg_link_gentab (chan *ch, GtkWidget *box)
 	g_object_steal_data (G_OBJECT (box), "ch");
 	gtk_container_set_border_width (GTK_CONTAINER (box), 0);
 	gtk_container_add (GTK_CONTAINER (win), box);
-	gtk_widget_show (win);
+	gtk_widget_set_visible (win, TRUE);
 
 	g_object_unref (box);
 }
@@ -1421,7 +1421,7 @@ mg_markup_item (GtkWidget *menu, char *text, int arg)
 	g_signal_connect (G_OBJECT (item), "activate",
 							G_CALLBACK (mg_color_insert), GINT_TO_POINTER (arg));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	gtk_widget_show (item);
+	gtk_widget_set_visible (item, TRUE);
 }
 
 GtkWidget *
@@ -1431,11 +1431,11 @@ mg_submenu (GtkWidget *menu, char *text)
 
 	item = gtk_menu_item_new_with_mnemonic (text);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	gtk_widget_show (item);
+	gtk_widget_set_visible (item, TRUE);
 
 	submenu = gtk_menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
-	gtk_widget_show (submenu);
+	gtk_widget_set_visible (submenu, TRUE);
 
 	return submenu;
 }
@@ -1572,7 +1572,7 @@ mg_create_tabmenu (session *sess, GdkEventButton *event, chan *ch)
 		item = gtk_menu_item_new_with_label ("");
 		gtk_label_set_markup (GTK_LABEL (gtk_bin_get_child (GTK_BIN (item))), buf);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		gtk_widget_show (item);
+		gtk_widget_set_visible (item, TRUE);
 
 		/* separator */
 		menu_quick_item (0, 0, menu, XCMENU_SHADED, 0, 0);
@@ -2457,7 +2457,7 @@ mg_update_meters (session_gui *gui)
 	gui->throttleinfo = NULL;
 
 	mg_create_meters (gui, gui->button_box_parent);
-	gtk_widget_show_all (gui->meter_box);
+	gtk_widget_set_visible (gui->meter_box, TRUE);
 }
 
 static void
@@ -2658,7 +2658,7 @@ mg_place_userlist_and_chanview_real (session_gui *gui, GtkWidget *userlist, GtkW
 	if (chanview)
 	{
 		/* incase the previous pos was POS_HIDDEN */
-		gtk_widget_show (chanview);
+		gtk_widget_set_visible (chanview, TRUE);
 
 		gtk_table_set_row_spacing (GTK_TABLE (gui->main_table), 1, 0);
 		gtk_table_set_row_spacing (GTK_TABLE (gui->main_table), 2, 2);
@@ -2884,7 +2884,7 @@ mg_search_toggle(session *sess)
 		gtk_entry_set_icon_from_stock (GTK_ENTRY (sess->gui->shentry), GTK_ENTRY_ICON_SECONDARY, NULL);
 
 		/* Show and focus */
-		gtk_widget_show(sess->gui->shbox);
+		gtk_widget_set_visible (sess->gui->shbox, TRUE);
 		gtk_widget_grab_focus(sess->gui->shentry);
 	}
 }
@@ -3170,7 +3170,7 @@ mg_create_topwindow (session *sess)
 
 	userlist_show (sess);
 
-	gtk_widget_show_all (table);
+	gtk_widget_set_visible (table, TRUE);
 
 	if (prefs.hex_gui_hide_menu)
 		gtk_widget_hide (sess->gui->menu);
@@ -3202,7 +3202,7 @@ mg_create_topwindow (session *sess)
 
 	mg_place_userlist_and_chanview (sess->gui);
 
-	gtk_widget_show (win);
+	gtk_widget_set_visible (win, TRUE);
 }
 
 static gboolean
@@ -3292,7 +3292,7 @@ mg_create_tabwindow (session *sess)
 
 	mg_focus (sess);
 
-	gtk_widget_show_all (table);
+	gtk_widget_set_visible (table, TRUE);
 
 	if (prefs.hex_gui_hide_menu)
 		gtk_widget_hide (sess->gui->menu);
@@ -3315,7 +3315,7 @@ mg_create_tabwindow (session *sess)
 
 	mg_place_userlist_and_chanview (sess->gui);
 
-	gtk_widget_show (win);
+	gtk_widget_set_visible (win, TRUE);
 
 #ifdef G_OS_WIN32
 	parent_win = gtk_widget_get_window (win);
@@ -3351,7 +3351,7 @@ mg_add_generic_tab (char *name, char *title, void *family, GtkWidget *box)
 	chan *ch;
 
 	gtk_notebook_append_page (GTK_NOTEBOOK (mg_gui->note_book), box, NULL);
-	gtk_widget_show (box);
+	gtk_widget_set_visible (box, TRUE);
 
 	ch = chanview_add (mg_gui->chanview, name, NULL, box, TRUE, TAG_UTIL, pix_tree_util);
 	chan_set_color (ch, plain_list);
@@ -3374,7 +3374,7 @@ fe_buttons_update (session *sess)
 	gui->button_box = mg_create_userlistbuttons (gui->button_box_parent);
 
 	if (prefs.hex_gui_ulist_buttons)
-		gtk_widget_show (sess->gui->button_box);
+		gtk_widget_set_visible (sess->gui->button_box, TRUE);
 	else
 		gtk_widget_hide (sess->gui->button_box);
 }
@@ -3443,7 +3443,7 @@ fe_dlgbuttons_update (session *sess)
 	gtk_box_reorder_child (GTK_BOX (gui->topic_bar), box, 3);
 	mg_create_dialogbuttons (box);
 
-	gtk_widget_show_all (box);
+	gtk_widget_set_visible (box, TRUE);
 
 	if (current_tab && current_tab->type != SESS_DIALOG)
 		gtk_widget_hide (current_tab->gui->dialogbutton_box);
@@ -3594,7 +3594,7 @@ mg_create_generic_tab (char *name, char *title, int force_toplevel,
 		vbox = gtk_vbox_new (0, 0);
 		*vbox_ret = vbox;
 		gtk_container_add (GTK_CONTAINER (win), vbox);
-		gtk_widget_show (vbox);
+		gtk_widget_set_visible (vbox, TRUE);
 		if (close_callback)
 			g_signal_connect (G_OBJECT (win), "destroy",
 									G_CALLBACK (close_callback), userdata);
@@ -3618,7 +3618,7 @@ mg_create_generic_tab (char *name, char *title, int force_toplevel,
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_box_pack_start (GTK_BOX (vbox), hbox, 0, 0, 0);
 		mg_create_link_buttons (hbox, ch);
-		gtk_widget_show (hbox);
+		gtk_widget_set_visible (hbox, TRUE);
 	}*/
 
 	return vbox;

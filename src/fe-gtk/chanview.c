@@ -274,7 +274,7 @@ chanview_new (int type, int trunc_len, gboolean sort, gboolean use_icons,
 	cv->trunc_len = trunc_len;
 	cv->sorted = sort;
 	cv->use_icons = use_icons;
-	gtk_widget_show (cv->box);
+	gtk_widget_set_visible (cv->box, TRUE);
 	chanview_set_impl (cv, type);
 
 	g_signal_connect (G_OBJECT (cv->box), "destroy",

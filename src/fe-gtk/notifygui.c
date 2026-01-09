@@ -133,7 +133,7 @@ notify_treeview_new (GtkWidget *box)
 	g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (view))),
 							"changed", G_CALLBACK (notify_row_cb), view);
 
-	gtk_widget_show (view);
+	gtk_widget_set_visible (view, TRUE);
 	return view;
 }
 
@@ -384,7 +384,7 @@ fe_notify_ask (char *nick, char *networks)
 	gtk_label_set_markup (GTK_LABEL (label), buf);
 	gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 3, 4);
 
-	gtk_widget_show_all (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void
@@ -419,7 +419,7 @@ notify_opengui (void)
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_SPREAD);
 	gtk_container_set_border_width (GTK_CONTAINER (bbox), 5);
 	gtk_box_pack_end (GTK_BOX (vbox), bbox, 0, 0, 0);
-	gtk_widget_show (bbox);
+	gtk_widget_set_visible (bbox, TRUE);
 
 	gtkutil_button (bbox, GTK_STOCK_NEW, 0, notify_add_clicked, 0,
 	                _("Add..."));
@@ -437,5 +437,5 @@ notify_opengui (void)
 
 	notify_gui_update ();
 
-	gtk_widget_show (notify_window);
+	gtk_widget_set_visible (notify_window, TRUE);
 }

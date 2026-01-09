@@ -197,7 +197,7 @@ ignore_treeview_new (GtkWidget *box)
 		g_list_free (list);
 	}
 	
-	gtk_widget_show (view);
+	gtk_widget_set_visible (view, TRUE);
 	return view;
 }
 
@@ -294,7 +294,7 @@ ignore_clear_entry_clicked (GtkWidget * wid)
 	g_signal_connect (G_OBJECT (dialog), "response",
 							G_CALLBACK (ignore_clear_cb), NULL);
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-	gtk_widget_show (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void
@@ -358,12 +358,12 @@ ignore_gui_open ()
 	g_object_set_data (G_OBJECT (ignorewin), "view", view);
 	
 	frame = gtk_frame_new (_("Ignore Stats:"));
-	gtk_widget_show (frame);
+	gtk_widget_set_visible (frame, TRUE);
 
 	stat_box = gtk_hbox_new (0, 2);
 	gtk_container_set_border_width (GTK_CONTAINER (stat_box), 6);
 	gtk_container_add (GTK_CONTAINER (frame), stat_box);
-	gtk_widget_show (stat_box);
+	gtk_widget_set_visible (stat_box, TRUE);
 
 	num_chan = ignore_stats_entry (stat_box, _("Channel:"), ignored_chan);
 	num_priv = ignore_stats_entry (stat_box, _("Private:"), ignored_priv);
@@ -377,7 +377,7 @@ ignore_gui_open ()
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (box), GTK_BUTTONBOX_SPREAD);
 	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 2);
 	gtk_container_set_border_width (GTK_CONTAINER (box), 5);
-	gtk_widget_show (box);
+	gtk_widget_set_visible (box, TRUE);
 
 	gtkutil_button (box, GTK_STOCK_NEW, 0, ignore_new_entry_clicked, 0,
 						 _("Add..."));
@@ -415,7 +415,7 @@ ignore_gui_open ()
 		
 		temp = temp->next;
 	}
-	gtk_widget_show (ignorewin);
+	gtk_widget_set_visible (ignorewin, TRUE);
 }
 
 void

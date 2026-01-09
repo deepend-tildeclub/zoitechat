@@ -98,7 +98,7 @@ url_treeview_new (GtkWidget *box)
 	                  G_CALLBACK (url_treeview_url_clicked_cb), NULL);
 	/* don't want column headers */
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
-	gtk_widget_show (view);
+	gtk_widget_set_visible (view, TRUE);
 	return view;
 }
 
@@ -208,7 +208,7 @@ url_opengui ()
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_SPREAD);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
 	gtk_box_pack_end (GTK_BOX (vbox), hbox, 0, 0, 0);
-	gtk_widget_show (hbox);
+	gtk_widget_set_visible (hbox, TRUE);
 
 	gtkutil_button (hbox, GTK_STOCK_CLEAR,
 						 _("Clear list"), url_button_clear, 0, _("Clear"));
@@ -217,7 +217,7 @@ url_opengui ()
 	gtkutil_button (hbox, GTK_STOCK_SAVE_AS,
 						 _("Save list to a file"), url_button_save, 0, _("Save As..."));
 
-	gtk_widget_show (urlgrabberwindow);
+	gtk_widget_set_visible (urlgrabberwindow, TRUE);
 
 	if (prefs.hex_url_grabber)
 		tree_foreach (url_tree, (tree_traverse_func *)populate_cb, NULL);

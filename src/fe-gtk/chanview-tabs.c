@@ -86,8 +86,8 @@ cv_tabs_sizealloc (GtkWidget *widget, GtkAllocation *allocation, chanview *cv)
 		gtk_widget_hide (((tabview *)cv)->b2);
 	} else
 	{
-		gtk_widget_show (((tabview *)cv)->b1);
-		gtk_widget_show (((tabview *)cv)->b2);
+		gtk_widget_set_visible (((tabview *)cv)->b1, TRUE);
+		gtk_widget_set_visible (((tabview *)cv)->b2, TRUE);
 	}
 }
 
@@ -275,7 +275,7 @@ make_sbutton (GtkArrowType type, void *click_cb, void *userdata)
 							G_CALLBACK (click_cb), userdata);
 	g_signal_connect (G_OBJECT (button), "scroll_event",
 							G_CALLBACK (tab_scroll_cb), userdata);
-	gtk_widget_show (arrow);
+	gtk_widget_set_visible (arrow, TRUE);
 
 	return button;
 }
@@ -296,7 +296,7 @@ cv_tabs_init (chanview *cv)
 	g_signal_connect (G_OBJECT (outer), "size_allocate",
 							G_CALLBACK (cv_tabs_sizealloc), cv);
 /*	gtk_container_set_border_width (GTK_CONTAINER (outer), 2);*/
-	gtk_widget_show (outer);
+	gtk_widget_set_visible (outer, TRUE);
 
 	viewport = gtk_viewport_new (0, 0);
 	gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
@@ -305,7 +305,7 @@ cv_tabs_init (chanview *cv)
 	g_signal_connect (G_OBJECT (viewport), "scroll_event",
 							G_CALLBACK (tab_scroll_cb), cv);
 	gtk_box_pack_start (GTK_BOX (outer), viewport, 1, 1, 0);
-	gtk_widget_show (viewport);
+	gtk_widget_set_visible (viewport, TRUE);
 
 	if (cv->vertical)
 		box = gtk_vbox_new (FALSE, 0);
@@ -313,14 +313,14 @@ cv_tabs_init (chanview *cv)
 		box = gtk_hbox_new (FALSE, 0);
 	((tabview *)cv)->inner = box;
 	gtk_container_add (GTK_CONTAINER (viewport), box);
-	gtk_widget_show (box);
+	gtk_widget_set_visible (box, TRUE);
 
 	/* if vertical, the buttons can be side by side */
 	if (cv->vertical)
 	{
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_box_pack_start (GTK_BOX (outer), hbox, 0, 0, 0);
-		gtk_widget_show (hbox);
+		gtk_widget_set_visible (hbox, TRUE);
 	}
 
 	/* make the Scroll buttons */
@@ -368,7 +368,7 @@ tab_add_sorted (chanview *cv, GtkWidget *box, GtkWidget *tab, chan *ch)
 	if (!cv->sorted)
 	{
 		gtk_box_pack_start (GTK_BOX (box), tab, 0, 0, 0);
-		gtk_widget_show (tab);
+		gtk_widget_set_visible (tab, TRUE);
 		return;
 	}
 
@@ -390,7 +390,7 @@ tab_add_sorted (chanview *cv, GtkWidget *box, GtkWidget *tab, chan *ch)
 			{
 				gtk_box_pack_start (GTK_BOX (box), tab, 0, 0, 0);
 				gtk_box_reorder_child (GTK_BOX (box), tab, ++i);
-				gtk_widget_show (tab);
+				gtk_widget_set_visible (tab, TRUE);
 				return;
 			}
 		}
@@ -401,7 +401,7 @@ tab_add_sorted (chanview *cv, GtkWidget *box, GtkWidget *tab, chan *ch)
 	/* append */
 	gtk_box_pack_start (GTK_BOX (box), tab, 0, 0, 0);
 	gtk_box_reorder_child (GTK_BOX (box), tab, i);
-	gtk_widget_show (tab);
+	gtk_widget_set_visible (tab, TRUE);
 }
 
 /* remove empty boxes and separators */
@@ -496,12 +496,12 @@ tab_add_real (chanview *cv, GtkWidget *tab, chan *ch)
 	}
 
 	gtk_box_pack_end (GTK_BOX (box), sep, 0, 0, 4);
-	gtk_widget_show (sep);
+	gtk_widget_set_visible (sep, TRUE);
 	gtk_box_pack_start (GTK_BOX (inner), box, 0, 0, 0);
 	g_object_set_data (G_OBJECT (box), "f", ch->family);
 	gtk_box_pack_start (GTK_BOX (box), tab, 0, 0, 0);
-	gtk_widget_show (tab);
-	gtk_widget_show (box);
+	gtk_widget_set_visible (tab, TRUE);
+	gtk_widget_set_visible (box, TRUE);
 	gtk_widget_queue_resize (gtk_widget_get_parent(inner));
 }
 
