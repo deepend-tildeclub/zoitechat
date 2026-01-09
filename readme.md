@@ -1,6 +1,10 @@
 # ZoiteChat
 
-ZoiteChat is an IRC client for Windows and UNIX-like operating systems.  
+[![Debian Build](https://github.com/ZoiteChat/zoitechat/actions/workflows/debian-build.yml/badge.svg)](https://github.com/ZoiteChat/zoitechat/actions/workflows/debian-build.yml)
+[![Flatpak Build](https://github.com/ZoiteChat/zoitechat/actions/workflows/flatpak-build.yml/badge.svg)](https://github.com/ZoiteChat/zoitechat/actions/workflows/flatpak-build.yml)
+[![Windows Build](https://github.com/ZoiteChat/zoitechat/actions/workflows/windows-build.yml/badge.svg)](https://github.com/ZoiteChat/zoitechat/actions/workflows/windows-build.yml)
+
+ZoiteChat is an HexChat based IRC client for Windows and UNIX-like operating systems.  
 See [IRCHelp.org](http://irchelp.org) for information about IRC in general.  
 For more information on ZoiteChat please read our [documentation](https://zoitechat.zoite.net/docs/en/latest/index.html):
 - [Downloads](http://zoitechat.zoite.net/downloads.html)
