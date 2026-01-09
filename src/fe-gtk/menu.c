@@ -1410,29 +1410,29 @@ menu_join (GtkWidget * wid, gpointer none)
 	GtkWidget *hbox, *dialog, *entry, *label;
 
 	dialog = gtk_dialog_new_with_buttons (_("Join Channel"),
-									GTK_WINDOW (parent_window), 0,
-									_("Retrieve channel list"), GTK_RESPONSE_HELP,
-									GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
-									GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
-									NULL);
-	gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->vbox), TRUE);
+							GTK_WINDOW (parent_window), 0,
+							_("Retrieve channel list"), GTK_RESPONSE_HELP,
+							_("_Cancel"), GTK_RESPONSE_REJECT,
+							_("_OK"), GTK_RESPONSE_ACCEPT,
+							NULL);
+	gtk_box_set_homogeneous (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), TRUE);
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-	hbox = gtk_hbox_new (TRUE, 0);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
 	entry = gtk_entry_new ();
-	GTK_ENTRY (entry)->editable = 0;	/* avoid auto-selection */
+	gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
 	gtk_entry_set_text (GTK_ENTRY (entry), "#");
 	g_signal_connect (G_OBJECT (entry), "activate",
 						 	G_CALLBACK (menu_join_entry_cb), dialog);
-	gtk_box_pack_end (GTK_BOX (hbox), entry, 0, 0, 0);
+	gtk_box_append (GTK_BOX (hbox), entry);
 
 	label = gtk_label_new (_("Enter Channel to Join:"));
-	gtk_box_pack_end (GTK_BOX (hbox), label, 0, 0, 0);
+	gtk_box_append (GTK_BOX (hbox), label);
 
 	g_signal_connect (G_OBJECT (dialog), "response",
 						   G_CALLBACK (menu_join_cb), entry);
 
-	gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
+	gtk_box_append (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), hbox);
 
 	gtk_widget_set_visible (dialog, TRUE);
 
