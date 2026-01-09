@@ -372,7 +372,7 @@ fe_get_str (char *msg, char *def, void *callback, void *userdata)
 		gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 	}
 
-	hbox = gtk_hbox_new (TRUE, 0);
+	hbox = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, TRUE, 0);
 
 	g_object_set_data (G_OBJECT (dialog), "cb", callback);
 	g_object_set_data (G_OBJECT (dialog), "ud", userdata);
@@ -458,7 +458,7 @@ fe_get_int (char *msg, int def, void *callback, void *userdata)
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 	gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent_window));
 
-	hbox = gtk_hbox_new (TRUE, 0);
+	hbox = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, TRUE, 0);
 
 	g_object_set_data (G_OBJECT (dialog), "cb", callback);
 	g_object_set_data (G_OBJECT (dialog), "ud", userdata);
@@ -530,7 +530,7 @@ gtkutil_button (GtkWidget *box, char *stock, char *tip, void *callback,
 	}
 	else
 	{
-		bbox = gtk_hbox_new (0, 0);
+		bbox = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, 0, 0);
 		gtkutil_container_add_child (wid, bbox);
 		gtk_widget_set_visible (bbox, TRUE);
 

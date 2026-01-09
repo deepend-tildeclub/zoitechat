@@ -48,6 +48,15 @@
 #define NUM_FLAG_WIDS 8
 
 #if GTK_CHECK_VERSION(4, 0, 0)
+static inline GtkWidget *
+gtkutil_box_new (GtkOrientation orientation, gboolean homogeneous, gint spacing)
+{
+	GtkWidget *box = gtk_box_new (orientation, spacing);
+
+	gtk_box_set_homogeneous (GTK_BOX (box), homogeneous);
+	return box;
+}
+
 static inline GtkAlign
 gtkutil_align_from_float (gfloat align)
 {
@@ -139,6 +148,17 @@ gtkutil_box_pack_end (GtkWidget *box, GtkWidget *child, gboolean expand,
 	gtkutil_box_pack_start (box, child, expand, fill, padding);
 }
 #else
+static inline GtkWidget *
+gtkutil_box_new (GtkOrientation orientation, gboolean homogeneous, gint spacing)
+{
+	if (orientation == GTK_ORIENTATION_HORIZONTAL)
+	{
+		return gtk_hbox_new (homogeneous, spacing);
+	}
+
+	return gtk_vbox_new (homogeneous, spacing);
+}
+
 static inline void
 gtkutil_set_alignment (GtkWidget *widget, gfloat xalign, gfloat yalign)
 {
