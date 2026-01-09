@@ -584,18 +584,18 @@ build_suggestion_menu(SexySpellEntry *entry, GtkWidget *menu, struct EnchantDict
 
 		mi = gtk_separator_menu_item_new();
 		gtk_container_add(GTK_CONTAINER(mi), label);
-		gtk_widget_show_all(mi);
+		gtk_widget_set_visible (mi, TRUE);
 		gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), mi);
 	} else {
 		/* build a set of menus with suggestions */
 		for (i = 0; i < n_suggestions; i++) {
 			if ((i != 0) && (i % 10 == 0)) {
 				mi = gtk_separator_menu_item_new();
-				gtk_widget_show(mi);
+				gtk_widget_set_visible (mi, TRUE);
 				gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
 
 				mi = gtk_menu_item_new_with_label(_("More..."));
-				gtk_widget_show(mi);
+				gtk_widget_set_visible (mi, TRUE);
 				gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
 
 				menu = gtk_menu_new();
@@ -605,7 +605,7 @@ build_suggestion_menu(SexySpellEntry *entry, GtkWidget *menu, struct EnchantDict
 			mi = gtk_menu_item_new_with_label(suggestions[i]);
 			g_object_set_data(G_OBJECT(mi), "enchant-dict", dict);
 			g_signal_connect(G_OBJECT(mi), "activate", G_CALLBACK(replace_word), entry);
-			gtk_widget_show(mi);
+			gtk_widget_set_visible (mi, TRUE);
 			gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
 		}
 	}
@@ -652,7 +652,7 @@ build_spelling_menu(SexySpellEntry *entry, const gchar *word)
 			}
 			g_free(lang);
 
-			gtk_widget_show(mi);
+			gtk_widget_set_visible (mi, TRUE);
 			gtk_menu_shell_append(GTK_MENU_SHELL(topmenu), mi);
 			menu = gtk_menu_new();
 			gtk_menu_item_set_submenu(GTK_MENU_ITEM(mi), menu);
@@ -662,7 +662,7 @@ build_spelling_menu(SexySpellEntry *entry, const gchar *word)
 
 	/* Separator */
 	mi = gtk_separator_menu_item_new ();
-	gtk_widget_show(mi);
+	gtk_widget_set_visible (mi, TRUE);
 	gtk_menu_shell_append(GTK_MENU_SHELL(topmenu), mi);
 
 	/* + Add to Dictionary */
@@ -702,19 +702,19 @@ build_spelling_menu(SexySpellEntry *entry, const gchar *word)
 
 			g_signal_connect(G_OBJECT(submi), "activate", G_CALLBACK(add_to_dictionary), entry);
 
-			gtk_widget_show(submi);
+			gtk_widget_set_visible (submi, TRUE);
 			gtk_menu_shell_append(GTK_MENU_SHELL(menu), submi);
 		}
 	}
 
-	gtk_widget_show_all(mi);
+	gtk_widget_set_visible (mi, TRUE);
 	gtk_menu_shell_append(GTK_MENU_SHELL(topmenu), mi);
 
 	/* - Ignore All */
 	mi = gtk_image_menu_item_new_with_label(_("Ignore All"));
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU));
 	g_signal_connect(G_OBJECT(mi), "activate", G_CALLBACK(ignore_all), entry);
-	gtk_widget_show_all(mi);
+	gtk_widget_set_visible (mi, TRUE);
 	gtk_menu_shell_append(GTK_MENU_SHELL(topmenu), mi);
 
 	return topmenu;
@@ -741,7 +741,7 @@ sexy_spell_entry_populate_popup(SexySpellEntry *entry, GtkMenu *menu, gpointer d
 
 	/* separator */
 	mi = gtk_separator_menu_item_new();
-	gtk_widget_show(mi);
+	gtk_widget_set_visible (mi, TRUE);
 	gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), mi);
 
 	/* Above the separator, show the suggestions menu */
@@ -754,7 +754,7 @@ sexy_spell_entry_populate_popup(SexySpellEntry *entry, GtkMenu *menu, gpointer d
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(mi), build_spelling_menu(entry, word));
 	g_free(word);
 
-	gtk_widget_show_all(mi);
+	gtk_widget_set_visible (mi, TRUE);
 	gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), mi);
 }
 

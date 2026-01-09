@@ -480,5 +480,5 @@ pevent_dialog_show ()
 	gtkutil_button (hbox, GTK_STOCK_OK, NULL, pevent_ok_cb,
 						NULL, _("OK"));
 
-	gtk_widget_show_all (pevent_dialog);
+	gtk_widget_set_visible (pevent_dialog, TRUE);
 }

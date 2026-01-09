@@ -138,7 +138,7 @@ open_rawlog (struct server *serv)
 	/* Copy selection to clipboard when Ctrl+Shift+C is pressed AND text auto-copy is disabled */
 	g_signal_connect (G_OBJECT (serv->gui->rawlog_window), "key_press_event", G_CALLBACK (rawlog_key_cb), serv->gui->rawlog_textlist);
 
-	gtk_widget_show_all (serv->gui->rawlog_window);
+	gtk_widget_set_visible (serv->gui->rawlog_window, TRUE);
 }
 
 void

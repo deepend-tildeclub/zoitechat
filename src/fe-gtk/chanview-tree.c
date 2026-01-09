@@ -112,7 +112,7 @@ cv_tree_init (chanview *cv)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (win),
 											  GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 	gtk_container_add (GTK_CONTAINER (cv->box), win);
-	gtk_widget_show (win);
+	gtk_widget_set_visible (win, TRUE);
 
 	view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cv->store));
 	gtk_widget_set_name (view, "zoitechat-tree");
@@ -182,7 +182,7 @@ cv_tree_init (chanview *cv)
 
 	((treeview *)cv)->tree = GTK_TREE_VIEW (view);
 	((treeview *)cv)->scrollw = win;
-	gtk_widget_show (view);
+	gtk_widget_set_visible (view, TRUE);
 }
 
 static void

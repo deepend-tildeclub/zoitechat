@@ -256,7 +256,7 @@ menu_toggle_item (char *label, GtkWidget *menu, void *callback, void *userdata,
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate",
 							G_CALLBACK (callback), userdata);
-	gtk_widget_show (item);
+	gtk_widget_set_visible (item, TRUE);
 
 	return item;
 }
@@ -320,7 +320,7 @@ menu_quick_item (char *cmd, char *label, GtkWidget * menu, int flags,
 								G_CALLBACK (popup_menu_cb), cmd);
 	if (flags & XCMENU_SHADED)
 		gtk_widget_set_sensitive (GTK_WIDGET (item), FALSE);
-	gtk_widget_show_all (item);
+	gtk_widget_set_visible (item, TRUE);
 
 	return item;
 }
@@ -335,7 +335,7 @@ menu_quick_item_with_callback (void *callback, char *label, GtkWidget * menu,
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate",
 							G_CALLBACK (callback), arg);
-	gtk_widget_show (item);
+	gtk_widget_set_visible (item, TRUE);
 }
 
 GtkWidget *
@@ -362,7 +362,7 @@ menu_quick_sub (char *name, GtkWidget *menu, GtkWidget **sub_item_ret, int flags
 			sub_item = gtk_menu_item_new_with_label (name);
 	}
 	gtk_menu_shell_insert (GTK_MENU_SHELL (menu), sub_item, pos);
-	gtk_widget_show (sub_item);
+	gtk_widget_set_visible (sub_item, TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (sub_item), sub_menu);
 
 	if (sub_item_ret)
@@ -778,14 +778,14 @@ menu_showhide_cb (session *sess)
 	if (prefs.hex_gui_hide_menu)
 		gtk_widget_hide (sess->gui->menu);
 	else
-		gtk_widget_show (sess->gui->menu);
+		gtk_widget_set_visible (sess->gui->menu, TRUE);
 }
 
 static void
 menu_topic_showhide_cb (session *sess)
 {
 	if (prefs.hex_gui_topicbar)
-		gtk_widget_show (sess->gui->topic_bar);
+		gtk_widget_set_visible (sess->gui->topic_bar, TRUE);
 	else
 		gtk_widget_hide (sess->gui->topic_bar);
 }
@@ -800,7 +800,7 @@ static void
 menu_ulbuttons_showhide_cb (session *sess)
 {
 	if (prefs.hex_gui_ulist_buttons)
-		gtk_widget_show (sess->gui->button_box);
+		gtk_widget_set_visible (sess->gui->button_box, TRUE);
 	else
 		gtk_widget_hide (sess->gui->button_box);
 }
@@ -812,7 +812,7 @@ menu_cmbuttons_showhide_cb (session *sess)
 	{
 	case SESS_CHANNEL:
 		if (prefs.hex_gui_mode_buttons)
-			gtk_widget_show (sess->gui->topicbutton_box);
+			gtk_widget_set_visible (sess->gui->topicbutton_box, TRUE);
 		else
 			gtk_widget_hide (sess->gui->topicbutton_box);
 		break;
@@ -1434,7 +1434,7 @@ menu_join (GtkWidget * wid, gpointer none)
 
 	gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
 
-	gtk_widget_show_all (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 
 	gtk_editable_set_editable (GTK_EDITABLE (entry), TRUE);
 	gtk_editable_set_position (GTK_EDITABLE (entry), 1);
@@ -1768,7 +1768,7 @@ menu_about (GtkWidget *wid, gpointer sess)
 	g_signal_connect (G_OBJECT(dialog), "response", G_CALLBACK(about_dialog_close), NULL);
 	g_signal_connect (G_OBJECT(dialog), "activate-link", G_CALLBACK(about_dialog_openurl), NULL);
 	
-	gtk_widget_show_all (GTK_WIDGET(dialog));
+	gtk_widget_set_visible (GTK_WIDGET(dialog), TRUE);
 }
 
 static struct mymenu mymenu[] = {
@@ -1901,7 +1901,7 @@ create_icon_menu (char *labeltext, void *stock_name, int is_stock)
 		img = gtk_image_new_from_pixbuf (*((GdkPixbuf **)stock_name));
 	item = gtk_image_menu_item_new_with_mnemonic (labeltext);
 	gtk_image_menu_item_set_image ((GtkImageMenuItem *)item, img);
-	gtk_widget_show (img);
+	gtk_widget_set_visible (img, TRUE);
 
 	return item;
 }
@@ -2080,7 +2080,7 @@ menu_radio_item (char *label, GtkWidget *menu, void *callback, void *userdata,
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate",
 							G_CALLBACK (callback), userdata);
-	gtk_widget_show (item);
+	gtk_widget_set_visible (item, TRUE);
 
 	return item;
 }
@@ -2399,7 +2399,7 @@ menu_create_main (void *accel_group, int bar, int away, int toplevel,
 			if (!bar || mymenu[i].id != MENU_ID_HEXCHAT)		
 #endif
 				gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), menu_item);
-			gtk_widget_show (menu_item);
+			gtk_widget_set_visible (menu_item, TRUE);
 			break;
 
 		case M_MENUPIX:
@@ -2429,7 +2429,7 @@ normalitem:
 				gtk_menu_shell_append (GTK_MENU_SHELL (submenu), item);
 			else
 				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-			gtk_widget_show (item);
+			gtk_widget_set_visible (item, TRUE);
 			break;
 
 		case M_MENUTOG:
@@ -2453,7 +2453,7 @@ togitem:
 				gtk_menu_shell_append (GTK_MENU_SHELL (submenu), item);
 			else
 				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-			gtk_widget_show (item);
+			gtk_widget_set_visible (item, TRUE);
 			gtk_widget_set_sensitive (item, mymenu[i].sensitive);
 			break;
 
@@ -2466,7 +2466,7 @@ togitem:
 			item = gtk_menu_item_new ();
 			gtk_widget_set_sensitive (item, FALSE);
 			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-			gtk_widget_show (item);
+			gtk_widget_set_visible (item, TRUE);
 			break;
 
 		case M_MENUSUB:
@@ -2477,7 +2477,7 @@ togitem:
 			g_object_set_data (G_OBJECT (item), "name", mymenu[i].text);
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
 			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-			gtk_widget_show (item);
+			gtk_widget_set_visible (item, TRUE);
 			break;
 
 		/*case M_END:*/ default:

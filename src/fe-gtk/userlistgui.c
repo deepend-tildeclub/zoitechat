@@ -661,7 +661,7 @@ userlist_create (GtkWidget *box)
 												GTK_POLICY_NEVER,
 											  GTK_POLICY_AUTOMATIC);
 	gtk_box_pack_start (GTK_BOX (box), sw, TRUE, TRUE, 0);
-	gtk_widget_show (sw);
+	gtk_widget_set_visible (sw, TRUE);
 
 	treeview = gtk_tree_view_new ();
 	gtk_widget_set_name (treeview, "zoitechat-userlist");
@@ -701,7 +701,7 @@ userlist_create (GtkWidget *box)
 	userlist_add_columns (GTK_TREE_VIEW (treeview));
 
 	gtk_container_add (GTK_CONTAINER (sw), treeview);
-	gtk_widget_show (treeview);
+	gtk_widget_set_visible (treeview, TRUE);
 
 	return treeview;
 }

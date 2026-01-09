@@ -758,7 +758,7 @@ chanlist_opengui (server *serv, int do_refresh)
 	/* make a label to store the user/channel info */
 	wid = gtk_label_new (NULL);
 	gtk_box_pack_start (GTK_BOX (vbox), wid, 0, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 	serv->gui->chanlist_label = wid;
 
 	/* ============================================================= */
@@ -780,7 +780,7 @@ chanlist_opengui (server *serv, int do_refresh)
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (view), TRUE);
 	/* this is a speed up, but no horizontal scrollbar :( */
 	/*gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW (view), TRUE);*/
-	gtk_widget_show (view);
+	gtk_widget_set_visible (view, TRUE);
 
 	/* ============================================================= */
 
@@ -788,7 +788,7 @@ chanlist_opengui (server *serv, int do_refresh)
 	gtk_table_set_col_spacings (GTK_TABLE (table), 12);
 	gtk_table_set_row_spacings (GTK_TABLE (table), 3);
 	gtk_box_pack_start (GTK_BOX (vbox), table, 0, 1, 0);
-	gtk_widget_show (table);
+	gtk_widget_set_visible (table, TRUE);
 
 	wid = gtkutil_button (NULL, GTK_STOCK_FIND, 0, chanlist_search_pressed, serv,
 								 _("_Search"));
@@ -820,17 +820,17 @@ chanlist_opengui (server *serv, int do_refresh)
 	gtkutil_set_alignment (wid, 0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), wid, 0, 1, 3, 4,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	hbox = gtk_hbox_new (0, 0);
 	gtk_box_set_spacing (GTK_BOX (hbox), 9);
 	gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 3, 4,
 							GTK_FILL, GTK_FILL, 0, 0);
-	gtk_widget_show (hbox);
+	gtk_widget_set_visible (hbox, TRUE);
 
 	wid = gtk_label_new (_("channels with"));
 	gtk_box_pack_start (GTK_BOX (hbox), wid, 0, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	wid = gtk_spin_button_new_with_range (1, 999999, 1);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (wid),
@@ -838,12 +838,12 @@ chanlist_opengui (server *serv, int do_refresh)
 	g_signal_connect (G_OBJECT (wid), "value_changed",
 							G_CALLBACK (chanlist_minusers), serv);
 	gtk_box_pack_start (GTK_BOX (hbox), wid, 0, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 	serv->gui->chanlist_min_spin = wid;
 
 	wid = gtk_label_new (_("to"));
 	gtk_box_pack_start (GTK_BOX (hbox), wid, 0, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	wid = gtk_spin_button_new_with_range (1, 999999, 1);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (wid),
@@ -851,11 +851,11 @@ chanlist_opengui (server *serv, int do_refresh)
 	g_signal_connect (G_OBJECT (wid), "value_changed",
 							G_CALLBACK (chanlist_maxusers), serv);
 	gtk_box_pack_start (GTK_BOX (hbox), wid, 0, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	wid = gtk_label_new (_("users."));
 	gtk_box_pack_start (GTK_BOX (hbox), wid, 0, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	/* ============================================================= */
 
@@ -863,20 +863,20 @@ chanlist_opengui (server *serv, int do_refresh)
 	gtkutil_set_alignment (wid, 0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), wid, 0, 1, 2, 3,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	hbox = gtk_hbox_new (0, 0);
 	gtk_box_set_spacing (GTK_BOX (hbox), 12);
 	gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 3,
 							GTK_FILL, GTK_FILL, 0, 0);
-	gtk_widget_show (hbox);
+	gtk_widget_set_visible (hbox, TRUE);
 
 	wid = gtk_check_button_new_with_label (_("Channel name"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (wid), TRUE);
 	g_signal_connect (G_OBJECT (wid), "toggled",
 							  G_CALLBACK(chanlist_match_channel_button_toggled), serv);
 	gtk_box_pack_start (GTK_BOX (hbox), wid, 0, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	wid = gtk_check_button_new_with_label (_("Topic"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (wid), TRUE);
@@ -884,7 +884,7 @@ chanlist_opengui (server *serv, int do_refresh)
 							  G_CALLBACK (chanlist_match_topic_button_toggled),
 							  serv);
 	gtk_box_pack_start (GTK_BOX (hbox), wid, 0, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	serv->gui->chanlist_match_wants_channel = 1;
 	serv->gui->chanlist_match_wants_topic = 1;
@@ -895,7 +895,7 @@ chanlist_opengui (server *serv, int do_refresh)
 	gtkutil_set_alignment (wid, 0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), wid, 0, 1, 1, 2,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	wid = gtk_combo_box_text_new ();
 	gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (wid), _("Simple Search"));
@@ -906,7 +906,7 @@ chanlist_opengui (server *serv, int do_refresh)
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 	g_signal_connect (G_OBJECT (wid), "changed",
 							G_CALLBACK (chanlist_combo_cb), serv);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	/* ============================================================= */
 
@@ -914,7 +914,7 @@ chanlist_opengui (server *serv, int do_refresh)
 	gtkutil_set_alignment (wid, 0, 0.5);
 	gtk_table_attach (GTK_TABLE (table), wid, 0, 1, 0, 1,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	wid = gtk_entry_new ();
 	gtk_entry_set_max_length (GTK_ENTRY(wid), 255);
@@ -925,7 +925,7 @@ chanlist_opengui (server *serv, int do_refresh)
 							  (gpointer) serv);
 	gtk_table_attach (GTK_TABLE (table), wid, 1, 2, 0, 1,
 							GTK_EXPAND | GTK_FILL, 0, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 	serv->gui->chanlist_wild = wid;
 
 	chanlist_find_cb (wid, serv);
@@ -935,7 +935,7 @@ chanlist_opengui (server *serv, int do_refresh)
 	wid = gtk_vseparator_new ();
 	gtk_table_attach (GTK_TABLE (table), wid, 2, 3, 0, 5,
 							GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 
 	g_signal_connect (G_OBJECT (serv->gui->chanlist_window), "destroy",
 							G_CALLBACK (chanlist_destroy_widget), serv);
@@ -949,6 +949,6 @@ chanlist_opengui (server *serv, int do_refresh)
 		chanlist_do_refresh (serv);
 
 	chanlist_update_buttons (serv);
-	gtk_widget_show (serv->gui->chanlist_window);
+	gtk_widget_set_visible (serv->gui->chanlist_window, TRUE);
 	gtk_widget_grab_focus (serv->gui->chanlist_refresh);
 }

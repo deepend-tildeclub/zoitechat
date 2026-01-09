@@ -279,7 +279,7 @@ gtkutil_file_req (GtkWindow *parent, const char *title, void *callback, void *us
 		gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
 	}
 
-	gtk_widget_show (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 }
 
 static gboolean
@@ -391,7 +391,7 @@ fe_get_str (char *msg, char *def, void *callback, void *userdata)
 
 	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), hbox);
 
-	gtk_widget_show_all (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void
@@ -480,7 +480,7 @@ fe_get_int (char *msg, int def, void *callback, void *userdata)
 
 	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), hbox);
 
-	gtk_widget_show_all (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 }
 
 void
@@ -509,7 +509,7 @@ fe_get_bool (char *title, char *prompt, void *callback, void *userdata)
 
 	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), prompt_label);
 
-	gtk_widget_show_all (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 }
 
 GtkWidget *
@@ -532,17 +532,17 @@ gtkutil_button (GtkWidget *box, char *stock, char *tip, void *callback,
 	{
 		bbox = gtk_hbox_new (0, 0);
 		gtk_container_add (GTK_CONTAINER (wid), bbox);
-		gtk_widget_show (bbox);
+		gtk_widget_set_visible (bbox, TRUE);
 
 		img = gtk_image_new_from_stock (stock, GTK_ICON_SIZE_MENU);
 		gtk_container_add (GTK_CONTAINER (bbox), img);
-		gtk_widget_show (img);
+		gtk_widget_set_visible (img, TRUE);
 		gtk_box_pack_start (GTK_BOX (box), wid, 0, 0, 0);
 	}
 
 	g_signal_connect (G_OBJECT (wid), "clicked",
 							G_CALLBACK (callback), userdata);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 	if (tip)
 		gtk_widget_set_tooltip_text (wid, tip);
 
@@ -554,7 +554,7 @@ gtkutil_label_new (char *text, GtkWidget * box)
 {
 	GtkWidget *label = gtk_label_new (text);
 	gtk_container_add (GTK_CONTAINER (box), label);
-	gtk_widget_show (label);
+	gtk_widget_set_visible (label, TRUE);
 }
 
 GtkWidget *
@@ -567,7 +567,7 @@ gtkutil_entry_new (int max, GtkWidget * box, void *callback,
 	if (callback)
 		g_signal_connect (G_OBJECT (entry), "changed",
 								G_CALLBACK (callback), userdata);
-	gtk_widget_show (entry);
+	gtk_widget_set_visible (entry, TRUE);
 	return entry;
 }
 
@@ -575,7 +575,7 @@ void
 show_and_unfocus (GtkWidget * wid)
 {
 	gtk_widget_set_can_focus (wid, FALSE);
-	gtk_widget_show (wid);
+	gtk_widget_set_visible (wid, TRUE);
 }
 
 void
@@ -662,7 +662,7 @@ gtkutil_treeview_new (GtkWidget *box, GtkTreeModel *model,
 	gtk_container_add (GTK_CONTAINER (box), win);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (win),
 											  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_widget_show (win);
+	gtk_widget_set_visible (win, TRUE);
 
 	view = gtk_tree_view_new_with_model (model);
 	/* the view now has a ref on the model, we can unref it */

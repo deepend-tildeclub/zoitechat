@@ -317,7 +317,7 @@ editlist_treeview_new (GtkWidget *box, char *title1, char *title2)
 
 	gtk_container_add (GTK_CONTAINER (scroll), view);
 	gtk_container_add (GTK_CONTAINER (box), scroll);
-	gtk_widget_show_all (box);
+	gtk_widget_set_visible (box, TRUE);
 
 	return view;
 }
@@ -352,7 +352,7 @@ editlist_gui_open (char *title1, char *title2, GSList *list, char *title, char *
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (box), GTK_BUTTONBOX_SPREAD);
 	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 2);
 	gtk_container_set_border_width (GTK_CONTAINER (box), 5);
-	gtk_widget_show (box);
+	gtk_widget_set_visible (box, TRUE);
 
 	gtkutil_button (box, GTK_STOCK_NEW, 0, editlist_add,
 					NULL, _("Add"));
@@ -366,5 +366,5 @@ editlist_gui_open (char *title1, char *title2, GSList *list, char *title, char *
 	store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
 	editlist_load (store, list);
 
-	gtk_widget_show (editlist_win);
+	gtk_widget_set_visible (editlist_win, TRUE);
 }

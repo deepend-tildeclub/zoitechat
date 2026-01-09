@@ -391,7 +391,7 @@ banlist_button_pressed (GtkWidget *wid, GdkEventButton *event, gpointer userdata
 			g_signal_connect (allitem, "activate", G_CALLBACK(banlist_copyentry), wid);
 			gtk_menu_shell_append (GTK_MENU_SHELL(menu), maskitem);
 			gtk_menu_shell_append (GTK_MENU_SHELL(menu), allitem);
-			gtk_widget_show_all (menu);
+			gtk_widget_set_visible (menu, TRUE);
 			
 			gtk_menu_popup (GTK_MENU(menu), NULL, NULL, NULL, NULL, 
 							event->button, gtk_get_current_event_time ());
@@ -570,7 +570,7 @@ banlist_clear (GtkWidget * wid, banlist_info *banl)
 	g_signal_connect (G_OBJECT (dialog), "response",
 							G_CALLBACK (banlist_clear_cb), banl);
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-	gtk_widget_show (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 }
 
 static void
@@ -756,7 +756,7 @@ banlist_treeview_new (GtkWidget *box, banlist_info *banl)
 	g_signal_connect (G_OBJECT (select), "changed", G_CALLBACK (banlist_select_changed), banl);
 	gtk_tree_selection_set_mode (select, GTK_SELECTION_MULTIPLE);
 
-	gtk_widget_show (view);
+	gtk_widget_set_visible (view, TRUE);
 	return view;
 }
 
@@ -837,7 +837,7 @@ banlist_opengui (struct session *sess)
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_SPREAD);
 	gtk_container_set_border_width (GTK_CONTAINER (bbox), 5);
 	gtk_box_pack_end (GTK_BOX (vbox), bbox, 0, 0, 0);
-	gtk_widget_show (bbox);
+	gtk_widget_set_visible (bbox, TRUE);
 
 	banl->but_remove = gtkutil_button (bbox, GTK_STOCK_REMOVE, 0, banlist_unban, banl,
 	                _("Remove"));
@@ -850,5 +850,5 @@ banlist_opengui (struct session *sess)
 
 	banlist_do_refresh (banl);
 
-	gtk_widget_show_all (banl->window);
+	gtk_widget_set_visible (banl->window, TRUE);
 }

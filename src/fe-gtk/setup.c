@@ -1039,7 +1039,7 @@ setup_create_id_menu (GtkWidget *table, char *label, int row, char *dest)
 		item = gtk_menu_item_new_with_label (_(text[i]));
 		g_object_set_data (G_OBJECT (item), "n", GINT_TO_POINTER (i));
 
-		gtk_widget_show (item);
+		gtk_widget_set_visible (item, TRUE);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		g_signal_connect (G_OBJECT (item), "activate",
 								G_CALLBACK (setup_id_menu_cb), dest);
@@ -1174,7 +1174,7 @@ setup_browsefont_cb (GtkWidget *button, GtkWidget *entry)
 	g_signal_connect (G_OBJECT (gtk_font_selection_dialog_get_cancel_button (dialog)), "clicked",
 							G_CALLBACK (setup_fontsel_cancel), dialog);
 
-	gtk_widget_show (GTK_WIDGET (dialog));
+	gtk_widget_set_visible (GTK_WIDGET (dialog), TRUE);
 }
 
 static void
@@ -1464,7 +1464,7 @@ setup_color_cb (GtkWidget *button, gpointer userdata)
 	gtk_color_selection_set_current_color (GTK_COLOR_SELECTION (gtk_color_selection_dialog_get_color_selection (cdialog)), color);
 	gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (setup_window));
 	gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
-	gtk_widget_show (dialog);
+	gtk_widget_set_visible (dialog, TRUE);
 
 	g_object_unref (cancel_button);
 	g_object_unref (ok_button);
@@ -1771,14 +1771,14 @@ setup_create_sound_page (void)
 
 	vbox1 = gtk_vbox_new (FALSE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), 6);
-	gtk_widget_show (vbox1);
+	gtk_widget_set_visible (vbox1, TRUE);
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox2);
+	gtk_widget_set_visible (vbox2, TRUE);
 	gtk_container_add (GTK_CONTAINER (vbox1), vbox2);
 
 	scrolledwindow1 = gtk_scrolled_window_new (NULL, NULL);
-	gtk_widget_show (scrolledwindow1);
+	gtk_widget_set_visible (scrolledwindow1, TRUE);
 	gtk_container_add (GTK_CONTAINER (vbox2), scrolledwindow1);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow1),
 											  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
@@ -1792,18 +1792,18 @@ setup_create_sound_page (void)
 	setup_snd_populate (GTK_TREE_VIEW (sound_tree));
 	g_signal_connect (G_OBJECT (sel), "changed",
 							G_CALLBACK (setup_snd_row_cb), NULL);
-	gtk_widget_show (sound_tree);
+	gtk_widget_set_visible (sound_tree, TRUE);
 	gtk_container_add (GTK_CONTAINER (scrolledwindow1), sound_tree);
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (sound_tree), TRUE);
 
 	table1 = gtk_table_new (2, 3, FALSE);
-	gtk_widget_show (table1);
+	gtk_widget_set_visible (table1, TRUE);
 	gtk_box_pack_start (GTK_BOX (vbox2), table1, FALSE, TRUE, 8);
 	gtk_table_set_row_spacings (GTK_TABLE (table1), 2);
 	gtk_table_set_col_spacings (GTK_TABLE (table1), 4);
 
 	sound_label = gtk_label_new_with_mnemonic (_("Sound file:"));
-	gtk_widget_show (sound_label);
+	gtk_widget_set_visible (sound_label, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), sound_label, 0, 1, 0, 1,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
@@ -1812,7 +1812,7 @@ setup_create_sound_page (void)
 	sndfile_entry = gtk_entry_new ();
 	g_signal_connect (G_OBJECT (sndfile_entry), "changed",
 							G_CALLBACK (setup_snd_changed_cb), sound_tree);
-	gtk_widget_show (sndfile_entry);
+	gtk_widget_set_visible (sndfile_entry, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), sndfile_entry, 0, 1, 1, 2,
 							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
@@ -1820,7 +1820,7 @@ setup_create_sound_page (void)
 	sound_browse = gtk_button_new_with_mnemonic (_("_Browse..."));
 	g_signal_connect (G_OBJECT (sound_browse), "clicked",
 							G_CALLBACK (setup_snd_browse_cb), sndfile_entry);
-	gtk_widget_show (sound_browse);
+	gtk_widget_set_visible (sound_browse, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), sound_browse, 1, 2, 1, 2,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
@@ -1832,7 +1832,7 @@ setup_create_sound_page (void)
 #endif
 	g_signal_connect (G_OBJECT (sound_play), "clicked",
 							G_CALLBACK (setup_snd_play_cb), sndfile_entry);
-	gtk_widget_show (sound_play);
+	gtk_widget_set_visible (sound_play, TRUE);
 	gtk_table_attach (GTK_TABLE (table1), sound_play, 2, 3, 1, 2,
 							(GtkAttachOptions) (GTK_FILL),
 							(GtkAttachOptions) (0), 0, 0);
@@ -2069,7 +2069,7 @@ setup_apply_to_sess (session_gui *gui)
 	}
 
 	if (prefs.hex_gui_ulist_buttons)
-		gtk_widget_show (gui->button_box);
+		gtk_widget_set_visible (gui->button_box, TRUE);
 	else
 		gtk_widget_hide (gui->button_box);
 
@@ -2323,7 +2323,7 @@ setup_window_open (void)
 							G_CALLBACK (setup_ok_cb), win);
 	gtk_box_pack_start (GTK_BOX (hbbox), wid, FALSE, FALSE, 0);
 
-	gtk_widget_show_all (win);
+	gtk_widget_set_visible (win, TRUE);
 
 	return win;
 }

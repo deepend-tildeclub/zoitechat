@@ -358,7 +358,7 @@ tray_toggle_visibility (gboolean force_hide)
 			gtk_window_maximize (win);
 		if (fullscreen)
 			gtk_window_fullscreen (win);
-		gtk_widget_show (GTK_WIDGET (win));
+		gtk_widget_set_visible (GTK_WIDGET (win), TRUE);
 		gtk_window_deiconify (win);
 		gtk_window_present (win);
 	}
@@ -461,7 +461,7 @@ tray_make_item (GtkWidget *menu, char *label, void *callback, void *userdata)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate",
 							G_CALLBACK (callback), userdata);
-	gtk_widget_show (item);
+	gtk_widget_set_visible (item, TRUE);
 
 	return item;
 }
