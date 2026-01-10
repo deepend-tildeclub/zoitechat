@@ -269,7 +269,7 @@ make_sbutton (GtkArrowType type, void *click_cb, void *userdata)
 
 	button = gtk_button_new ();
 	arrow = gtk_arrow_new (type, GTK_SHADOW_NONE);
-	gtk_container_add (GTK_CONTAINER (button), arrow);
+	gtkutil_container_add_child (button, arrow);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 	g_signal_connect (G_OBJECT (button), "clicked",
 							G_CALLBACK (click_cb), userdata);
@@ -312,7 +312,7 @@ cv_tabs_init (chanview *cv)
 	else
 		box = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, FALSE, 0);
 	((tabview *)cv)->inner = box;
-	gtk_container_add (GTK_CONTAINER (viewport), box);
+	gtkutil_container_add_child (viewport, box);
 	gtk_widget_set_visible (box, TRUE);
 
 	/* if vertical, the buttons can be side by side */
@@ -336,8 +336,8 @@ cv_tabs_init (chanview *cv)
 
 	if (hbox)
 	{
-		gtk_container_add (GTK_CONTAINER (hbox), ((tabview *)cv)->b2);
-		gtk_container_add (GTK_CONTAINER (hbox), ((tabview *)cv)->b1);
+		gtkutil_container_add_child (hbox, ((tabview *)cv)->b2);
+		gtkutil_container_add_child (hbox, ((tabview *)cv)->b1);
 	} else
 	{
 		gtk_box_pack_start (GTK_BOX (outer), ((tabview *)cv)->b2, 0, 0, 0);
@@ -349,7 +349,7 @@ cv_tabs_init (chanview *cv)
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 	gtk_widget_set_can_focus (button, FALSE);
 
-	gtk_container_add (GTK_CONTAINER (cv->box), outer);
+	gtkutil_container_add_child (cv->box, outer);
 }
 
 static void

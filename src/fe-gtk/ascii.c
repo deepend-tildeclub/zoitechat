@@ -138,7 +138,7 @@ ascii_open (void)
 		{
 			table_pos++;
 			hbox = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, 0, 0);
-			gtk_container_add (GTK_CONTAINER (vbox), hbox);
+			gtkutil_container_add_child (vbox, hbox);
 			gtk_widget_set_visible (hbox, TRUE);
 			i++;
 			continue;
@@ -162,8 +162,8 @@ ascii_open (void)
 	}
 
 	frame = gtk_frame_new ("");
-	gtk_container_add (GTK_CONTAINER (hbox), frame);
-	gtk_container_add (GTK_CONTAINER (frame), label);
+	gtkutil_container_add_child (hbox, frame);
+	gtkutil_container_add_child (frame, label);
 	gtk_widget_set_visible (label, TRUE);
 	gtk_widget_set_visible (frame, TRUE);
 

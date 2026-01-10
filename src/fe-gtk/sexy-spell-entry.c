@@ -583,7 +583,7 @@ build_suggestion_menu(SexySpellEntry *entry, GtkWidget *menu, struct EnchantDict
 		gtk_label_set_markup(GTK_LABEL(label), _("<i>(no suggestions)</i>"));
 
 		mi = gtk_separator_menu_item_new();
-		gtk_container_add(GTK_CONTAINER(mi), label);
+		gtkutil_container_add_child (mi, label);
 		gtk_widget_set_visible (mi, TRUE);
 		gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), mi);
 	} else {

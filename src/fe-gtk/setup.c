@@ -839,7 +839,7 @@ setup_create_spin (GtkWidget *table, int row, const setting *set)
 							GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
 	rbox = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, 0, 0);
-	gtk_container_add (GTK_CONTAINER (align), rbox);
+	gtkutil_container_add_child (align, rbox);
 
 	wid = gtk_spin_button_new_with_range (0, set->extra, 1);
 	g_object_set_data (G_OBJECT (wid), "lbl", label);
@@ -972,7 +972,7 @@ setup_create_radio (GtkWidget *table, int row, const setting *set)
 			/*if (set->tooltip)
 				gtk_widget_set_tooltip_text (wid, _(set->tooltip));*/
 			group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (wid));
-			gtk_container_add (GTK_CONTAINER (hbox), wid);
+			gtkutil_container_add_child (hbox, wid);
 			if (i == setup_get_int (&setup_prefs, set))
 				gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (wid), TRUE);
 			g_object_set_data (G_OBJECT (wid), "n", GINT_TO_POINTER (i));
@@ -1534,7 +1534,7 @@ setup_create_color_page (void)
 	gtk_container_set_border_width (GTK_CONTAINER (tab), 6);
 	gtk_table_set_row_spacings (GTK_TABLE (tab), 2);
 	gtk_table_set_col_spacings (GTK_TABLE (tab), 3);
-	gtk_container_add (GTK_CONTAINER (box), tab);
+	gtkutil_container_add_child (box, tab);
 
 	setup_create_header (tab, 0, N_("Text Colors"));
 
@@ -1775,11 +1775,11 @@ setup_create_sound_page (void)
 
 	vbox2 = gtkutil_box_new (GTK_ORIENTATION_VERTICAL, FALSE, 0);
 	gtk_widget_set_visible (vbox2, TRUE);
-	gtk_container_add (GTK_CONTAINER (vbox1), vbox2);
+	gtkutil_container_add_child (vbox1, vbox2);
 
 	scrolledwindow1 = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_set_visible (scrolledwindow1, TRUE);
-	gtk_container_add (GTK_CONTAINER (vbox2), scrolledwindow1);
+	gtkutil_container_add_child (vbox2, scrolledwindow1);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow1),
 											  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow1),
@@ -1793,7 +1793,7 @@ setup_create_sound_page (void)
 	g_signal_connect (G_OBJECT (sel), "changed",
 							G_CALLBACK (setup_snd_row_cb), NULL);
 	gtk_widget_set_visible (sound_tree, TRUE);
-	gtk_container_add (GTK_CONTAINER (scrolledwindow1), sound_tree);
+	gtkutil_container_add_child (scrolledwindow1, sound_tree);
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (sound_tree), TRUE);
 
 	table1 = gtk_table_new (2, 3, FALSE);
@@ -1859,7 +1859,7 @@ setup_add_page (const char *title, GtkWidget *book, GtkWidget *tab)
 	gtkutil_set_padding (label, 2, 1);
 	gtk_box_pack_start (GTK_BOX (vvbox), label, FALSE, FALSE, 2);
 
-	gtk_container_add (GTK_CONTAINER (vvbox), tab);
+	gtkutil_container_add_child (vvbox, tab);
 
 	sw = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new (NULL, NULL));
 	gtk_scrolled_window_set_shadow_type (sw, GTK_SHADOW_IN);
@@ -1939,7 +1939,7 @@ setup_create_pages (GtkWidget *box)
 
 	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (book), FALSE);
 	gtk_notebook_set_show_border (GTK_NOTEBOOK (book), FALSE);
-	gtk_container_add (GTK_CONTAINER (box), book);
+	gtkutil_container_add_child (box, book);
 
 	return book;
 }
@@ -2025,7 +2025,7 @@ setup_create_tree (GtkWidget *box, GtkWidget *book)
 	gtk_tree_view_expand_all (GTK_TREE_VIEW (tree));
 
 	frame = gtk_frame_new (NULL);
-	gtk_container_add (GTK_CONTAINER (frame), tree);
+	gtkutil_container_add_child (frame, tree);
 	gtk_box_pack_start (GTK_BOX (box), frame, 0, 0, 0);
 	gtk_box_reorder_child (GTK_BOX (box), frame, 0);
 
@@ -2300,10 +2300,10 @@ setup_window_open (void)
 
 	vbox = gtkutil_box_new (GTK_ORIENTATION_VERTICAL, FALSE, 5);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-	gtk_container_add (GTK_CONTAINER (win), vbox);
+	gtkutil_container_add_child (win, vbox);
 
 	hbox = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, FALSE, 4);
-	gtk_container_add (GTK_CONTAINER (vbox), hbox);
+	gtkutil_container_add_child (vbox, hbox);
 
 	setup_create_tree (hbox, setup_create_pages (hbox));
 

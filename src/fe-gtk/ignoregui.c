@@ -362,7 +362,7 @@ ignore_gui_open ()
 
 	stat_box = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, 0, 2);
 	gtk_container_set_border_width (GTK_CONTAINER (stat_box), 6);
-	gtk_container_add (GTK_CONTAINER (frame), stat_box);
+	gtkutil_container_add_child (frame, stat_box);
 	gtk_widget_set_visible (stat_box, TRUE);
 
 	num_chan = ignore_stats_entry (stat_box, _("Channel:"), ignored_chan);
