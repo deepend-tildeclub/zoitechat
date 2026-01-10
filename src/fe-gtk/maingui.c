@@ -1354,7 +1354,7 @@ mg_link_gentab (chan *ch, GtkWidget *box)
 	/* so it doesn't try to chan_remove (there's no tab anymore) */
 	g_object_steal_data (G_OBJECT (box), "ch");
 	gtk_container_set_border_width (GTK_CONTAINER (box), 0);
-	gtk_container_add (GTK_CONTAINER (win), box);
+	gtkutil_container_add_child (win, box);
 	gtk_widget_set_visible (win, TRUE);
 
 	g_object_unref (box);
@@ -2009,7 +2009,7 @@ mg_create_flagbutton (char *tip, GtkWidget *box, char *face)
 	btn = gtk_toggle_button_new ();
 	gtk_widget_set_size_request (btn, -1, 0);
 	gtk_widget_set_tooltip_text (btn, tip);
-	gtk_container_add (GTK_CONTAINER(btn), lbl);
+	gtkutil_container_add_child (btn, lbl);
 
 	gtk_box_pack_start (GTK_BOX (box), btn, 0, 0, 0);
 	g_signal_connect (G_OBJECT (btn), "toggled",
@@ -2182,7 +2182,7 @@ mg_create_topicbar (session *sess, GtkWidget *box)
 	gui->topic_entry = topic = sexy_spell_entry_new ();
 	gtk_widget_set_name (topic, "zoitechat-inputbox");
 	sexy_spell_entry_set_checked (SEXY_SPELL_ENTRY (topic), FALSE);
-	gtk_container_add (GTK_CONTAINER (hbox), topic);
+	gtkutil_container_add_child (hbox, topic);
 	g_signal_connect (G_OBJECT (topic), "activate",
 							G_CALLBACK (mg_topic_cb), 0);
 
@@ -2335,13 +2335,13 @@ mg_create_textarea (session *sess, GtkWidget *box)
 	};
 
 	vbox = gtkutil_box_new (GTK_ORIENTATION_VERTICAL, FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (box), vbox);
+	gtkutil_container_add_child (box, vbox);
 	inbox = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, FALSE, 2);
-	gtk_container_add (GTK_CONTAINER (vbox), inbox);
+	gtkutil_container_add_child (vbox, inbox);
 
 	frame = gtk_frame_new (NULL);
 	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-	gtk_container_add (GTK_CONTAINER (inbox), frame);
+	gtkutil_container_add_child (inbox, frame);
 
 	gui->xtext = gtk_xtext_new (colors, TRUE);
 	xtext = GTK_XTEXT (gui->xtext);
@@ -2349,7 +2349,7 @@ mg_create_textarea (session *sess, GtkWidget *box)
 	gtk_xtext_set_thin_separator (xtext, prefs.hex_text_thin_sep);
 	gtk_xtext_set_urlcheck_function (xtext, mg_word_check);
 	gtk_xtext_set_max_lines (xtext, prefs.hex_text_max_lines);
-	gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (xtext));
+	gtkutil_container_add_child (frame, GTK_WIDGET (xtext));
 
 	mg_update_xtext (GTK_WIDGET (xtext));
 
@@ -2383,13 +2383,13 @@ mg_create_infoframe (GtkWidget *box)
 
 	frame = gtk_frame_new (0);
 	gtk_frame_set_shadow_type ((GtkFrame*)frame, GTK_SHADOW_OUT);
-	gtk_container_add (GTK_CONTAINER (box), frame);
+	gtkutil_container_add_child (box, frame);
 
 	hbox = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, 0, 0);
-	gtk_container_add (GTK_CONTAINER (frame), hbox);
+	gtkutil_container_add_child (frame, hbox);
 
 	label = gtk_label_new (NULL);
-	gtk_container_add (GTK_CONTAINER (hbox), label);
+	gtkutil_container_add_child (hbox, label);
 
 	return label;
 }
@@ -2418,7 +2418,7 @@ mg_create_meters (session_gui *gui, GtkWidget *parent_box)
 #endif
 
 		wid = gtk_event_box_new ();
-		gtk_container_add (GTK_CONTAINER (wid), gui->lagometer);
+		gtkutil_container_add_child (wid, gui->lagometer);
 		gtk_box_pack_start (GTK_BOX (box), wid, 0, 0, 0);
 	}
 	if (prefs.hex_gui_lagometer & 2)
@@ -2437,7 +2437,7 @@ mg_create_meters (session_gui *gui, GtkWidget *parent_box)
 #endif
 
 		wid = gtk_event_box_new ();
-		gtk_container_add (GTK_CONTAINER (wid), gui->throttlemeter);
+		gtkutil_container_add_child (wid, gui->throttlemeter);
 		gtk_box_pack_start (GTK_BOX (box), wid, 0, 0, 0);
 	}
 	if (prefs.hex_gui_throttlemeter & 2)
@@ -2466,14 +2466,14 @@ mg_create_userlist (session_gui *gui, GtkWidget *box)
 	GtkWidget *frame, *ulist, *vbox;
 
 	vbox = gtkutil_box_new (GTK_ORIENTATION_VERTICAL, 0, 1);
-	gtk_container_add (GTK_CONTAINER (box), vbox);
+	gtkutil_container_add_child (box, vbox);
 
 	frame = gtk_frame_new (NULL);
 	if (prefs.hex_gui_ulist_count)
 		gtk_box_pack_start (GTK_BOX (vbox), frame, 0, 0, GUI_SPACING);
 
 	gui->namelistinfo = gtk_label_new (NULL);
-	gtk_container_add (GTK_CONTAINER (frame), gui->namelistinfo);
+	gtkutil_container_add_child (frame, gui->namelistinfo);
 
 	gui->user_tree = ulist = userlist_create (vbox);
 
@@ -2557,7 +2557,7 @@ mg_create_center (session *sess, session_gui *gui, GtkWidget *box)
 	}
 	gtk_paned_pack2 (GTK_PANED (gui->hpane_right), gui->vpane_right, FALSE, TRUE);
 
-	gtk_container_add (GTK_CONTAINER (box), gui->hpane_left);
+	gtkutil_container_add_child (box, gui->hpane_left);
 
 	gui->note_book = book = gtk_notebook_new ();
 	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (book), FALSE);
@@ -2989,7 +2989,7 @@ mg_create_entry (session *sess, GtkWidget *box)
 	gtk_entry_set_max_length (GTK_ENTRY (gui->input_box), 0);
 	g_signal_connect (G_OBJECT (entry), "activate",
 							G_CALLBACK (mg_inputbox_cb), gui);
-	gtk_container_add (GTK_CONTAINER (hbox), entry);
+	gtkutil_container_add_child (hbox, entry);
 
 	gtk_widget_set_name (entry, "zoitechat-inputbox");
 	g_signal_connect (G_OBJECT (entry), "key_press_event",
@@ -3155,7 +3155,7 @@ mg_create_topwindow (session *sess)
 	/* left and right borders */
 	gtk_table_set_col_spacing (GTK_TABLE (table), 0, 1);
 	gtk_table_set_col_spacing (GTK_TABLE (table), 1, 1);
-	gtk_container_add (GTK_CONTAINER (win), table);
+	gtkutil_container_add_child (win, table);
 
 	mg_create_irctab (sess, table);
 	mg_create_menu (sess->gui, table, sess->server->is_away);
@@ -3284,7 +3284,7 @@ mg_create_tabwindow (session *sess)
 	/* left and right borders */
 	gtk_table_set_col_spacing (GTK_TABLE (table), 0, 1);
 	gtk_table_set_col_spacing (GTK_TABLE (table), 1, 1);
-	gtk_container_add (GTK_CONTAINER (win), table);
+	gtkutil_container_add_child (win, table);
 
 	mg_create_irctab (sess, table);
 	mg_create_tabs (sess->gui);
@@ -3593,7 +3593,7 @@ mg_create_generic_tab (char *name, char *title, int force_toplevel,
 		win = gtkutil_window_new (title, name, width, height, 2);
 		vbox = gtkutil_box_new (GTK_ORIENTATION_VERTICAL, 0, 0);
 		*vbox_ret = vbox;
-		gtk_container_add (GTK_CONTAINER (win), vbox);
+		gtkutil_container_add_child (win, vbox);
 		gtk_widget_set_visible (vbox, TRUE);
 		if (close_callback)
 			g_signal_connect (G_OBJECT (win), "destroy",

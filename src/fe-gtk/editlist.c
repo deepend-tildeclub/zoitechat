@@ -315,8 +315,8 @@ editlist_treeview_new (GtkWidget *box, char *title1, char *title2)
 	gtk_tree_view_column_set_resizable (col, TRUE);
 	gtk_tree_view_column_set_min_width (col, 100);
 
-	gtk_container_add (GTK_CONTAINER (scroll), view);
-	gtk_container_add (GTK_CONTAINER (box), scroll);
+	gtkutil_container_add_child (scroll, view);
+	gtkutil_container_add_child (box, scroll);
 	gtk_widget_set_visible (box, TRUE);
 
 	return view;
