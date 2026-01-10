@@ -530,20 +530,34 @@ GtkWidget *
 gtkutil_button (GtkWidget *box, char *stock, char *tip, void *callback,
 					 void *userdata, char *labeltext)
 {
-	GtkWidget *wid, *img, *bbox;
+	GtkWidget *wid;
+#if !GTK_CHECK_VERSION(4, 0, 0)
+	GtkWidget *img, *bbox;
+#endif
 
 	wid = gtk_button_new ();
 
 	if (labeltext)
 	{
 		gtk_button_set_label (GTK_BUTTON (wid), labeltext);
+#if GTK_CHECK_VERSION(4, 0, 0)
+		if (stock)
+			gtk_button_set_icon_name (GTK_BUTTON (wid), stock);
+#else
 		gtk_button_set_image (GTK_BUTTON (wid), gtk_image_new_from_stock (stock, GTK_ICON_SIZE_MENU));
+#endif
 		gtk_button_set_use_underline (GTK_BUTTON (wid), TRUE);
 		if (box)
 			gtkutil_container_add_child (box, wid);
 	}
 	else
 	{
+#if GTK_CHECK_VERSION(4, 0, 0)
+		if (stock)
+			gtk_button_set_icon_name (GTK_BUTTON (wid), stock);
+		if (box)
+			gtkutil_container_add_child (box, wid);
+#else
 		bbox = gtkutil_box_new (GTK_ORIENTATION_HORIZONTAL, 0, 0);
 		gtkutil_container_add_child (wid, bbox);
 		gtk_widget_set_visible (bbox, TRUE);
@@ -551,7 +565,9 @@ gtkutil_button (GtkWidget *box, char *stock, char *tip, void *callback,
 		img = gtk_image_new_from_stock (stock, GTK_ICON_SIZE_MENU);
 		gtkutil_container_add_child (bbox, img);
 		gtk_widget_set_visible (img, TRUE);
-		gtkutil_box_pack_start (box, wid, 0, 0, 0);
+		if (box)
+			gtkutil_box_pack_start (box, wid, 0, 0, 0);
+#endif
 	}
 
 	g_signal_connect (G_OBJECT (wid), "clicked",

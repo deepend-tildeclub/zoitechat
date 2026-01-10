@@ -48,6 +48,182 @@
 #define NUM_FLAG_WIDS 8
 
 #if GTK_CHECK_VERSION(4, 0, 0)
+typedef int GtkIconSize;
+#define GTK_ICON_SIZE_MENU 0
+#define GTK_ICON_SIZE_LARGE_TOOLBAR 1
+#define GTK_ICON_SIZE_DIALOG 2
+
+#ifndef GTK_STOCK_ABOUT
+#define GTK_STOCK_ABOUT "help-about"
+#endif
+#ifndef GTK_STOCK_ADD
+#define GTK_STOCK_ADD "list-add"
+#endif
+#ifndef GTK_STOCK_APPLY
+#define GTK_STOCK_APPLY "dialog-apply"
+#endif
+#ifndef GTK_STOCK_CANCEL
+#define GTK_STOCK_CANCEL "process-stop"
+#endif
+#ifndef GTK_STOCK_CLEAR
+#define GTK_STOCK_CLEAR "edit-clear"
+#endif
+#ifndef GTK_STOCK_CLOSE
+#define GTK_STOCK_CLOSE "window-close"
+#endif
+#ifndef GTK_STOCK_CONNECT
+#define GTK_STOCK_CONNECT "network-connect"
+#endif
+#ifndef GTK_STOCK_COPY
+#define GTK_STOCK_COPY "edit-copy"
+#endif
+#ifndef GTK_STOCK_DELETE
+#define GTK_STOCK_DELETE "edit-delete"
+#endif
+#ifndef GTK_STOCK_DIALOG_ERROR
+#define GTK_STOCK_DIALOG_ERROR "dialog-error"
+#endif
+#ifndef GTK_STOCK_DISCONNECT
+#define GTK_STOCK_DISCONNECT "network-disconnect"
+#endif
+#ifndef GTK_STOCK_FIND
+#define GTK_STOCK_FIND "edit-find"
+#endif
+#ifndef GTK_STOCK_GO_BACK
+#define GTK_STOCK_GO_BACK "go-previous"
+#endif
+#ifndef GTK_STOCK_GO_FORWARD
+#define GTK_STOCK_GO_FORWARD "go-next"
+#endif
+#ifndef GTK_STOCK_HELP
+#define GTK_STOCK_HELP "help-browser"
+#endif
+#ifndef GTK_STOCK_INDEX
+#define GTK_STOCK_INDEX "view-list"
+#endif
+#ifndef GTK_STOCK_JUMP_TO
+#define GTK_STOCK_JUMP_TO "go-jump"
+#endif
+#ifndef GTK_STOCK_JUSTIFY_LEFT
+#define GTK_STOCK_JUSTIFY_LEFT "format-justify-left"
+#endif
+#ifndef GTK_STOCK_MEDIA_PLAY
+#define GTK_STOCK_MEDIA_PLAY "media-playback-start"
+#endif
+#ifndef GTK_STOCK_NETWORK
+#define GTK_STOCK_NETWORK "network-workgroup"
+#endif
+#ifndef GTK_STOCK_NEW
+#define GTK_STOCK_NEW "document-new"
+#endif
+#ifndef GTK_STOCK_NO
+#define GTK_STOCK_NO "process-stop"
+#endif
+#ifndef GTK_STOCK_OK
+#define GTK_STOCK_OK "emblem-ok"
+#endif
+#ifndef GTK_STOCK_OPEN
+#define GTK_STOCK_OPEN "document-open"
+#endif
+#ifndef GTK_STOCK_PREFERENCES
+#define GTK_STOCK_PREFERENCES "preferences-system"
+#endif
+#ifndef GTK_STOCK_QUIT
+#define GTK_STOCK_QUIT "application-exit"
+#endif
+#ifndef GTK_STOCK_REFRESH
+#define GTK_STOCK_REFRESH "view-refresh"
+#endif
+#ifndef GTK_STOCK_REDO
+#define GTK_STOCK_REDO "edit-redo"
+#endif
+#ifndef GTK_STOCK_REMOVE
+#define GTK_STOCK_REMOVE "list-remove"
+#endif
+#ifndef GTK_STOCK_REVERT_TO_SAVED
+#define GTK_STOCK_REVERT_TO_SAVED "document-revert"
+#endif
+#ifndef GTK_STOCK_SAVE
+#define GTK_STOCK_SAVE "document-save"
+#endif
+#ifndef GTK_STOCK_SAVE_AS
+#define GTK_STOCK_SAVE_AS "document-save-as"
+#endif
+#ifndef GTK_STOCK_SPELL_CHECK
+#define GTK_STOCK_SPELL_CHECK "tools-check-spelling"
+#endif
+#ifndef GTK_STOCK_YES
+#define GTK_STOCK_YES "emblem-ok"
+#endif
+
+typedef enum
+{
+	GTK_RELIEF_NONE
+} GtkReliefStyle;
+
+static inline void
+gtk_button_set_relief (GtkButton *button, GtkReliefStyle relief)
+{
+	gtk_button_set_has_frame (button, relief != GTK_RELIEF_NONE);
+}
+
+static inline void
+gtk_button_set_image (GtkButton *button, GtkWidget *image)
+{
+	gtk_button_set_child (button, image);
+}
+
+static inline const char *
+gtkutil_stock_label (const char *stock_id)
+{
+	if (g_strcmp0 (stock_id, GTK_STOCK_APPLY) == 0)
+		return _("_Apply");
+	if (g_strcmp0 (stock_id, GTK_STOCK_CANCEL) == 0)
+		return _("_Cancel");
+	if (g_strcmp0 (stock_id, GTK_STOCK_MEDIA_PLAY) == 0)
+		return _("_Play");
+	if (g_strcmp0 (stock_id, GTK_STOCK_NO) == 0)
+		return _("_No");
+	if (g_strcmp0 (stock_id, GTK_STOCK_OK) == 0)
+		return _("_OK");
+	if (g_strcmp0 (stock_id, GTK_STOCK_YES) == 0)
+		return _("_Yes");
+
+	return NULL;
+}
+
+static inline GtkWidget *
+gtk_button_new_from_stock (const gchar *stock_id)
+{
+	GtkWidget *button = gtk_button_new ();
+	const char *label = gtkutil_stock_label (stock_id);
+
+	if (label != NULL)
+	{
+		gtk_button_set_label (GTK_BUTTON (button), label);
+		gtk_button_set_use_underline (GTK_BUTTON (button), TRUE);
+	}
+
+	if (stock_id != NULL)
+		gtk_button_set_icon_name (GTK_BUTTON (button), stock_id);
+
+	return button;
+}
+
+static inline GtkWidget *
+gtk_image_new_from_stock (const gchar *stock_id, GtkIconSize size)
+{
+	(void)size;
+	return gtk_image_new_from_icon_name (stock_id);
+}
+
+static inline void
+gtk_entry_set_icon_from_stock (GtkEntry *entry, GtkEntryIconPosition icon_pos,
+                               const gchar *stock_id)
+{
+	gtk_entry_set_icon_from_icon_name (entry, icon_pos, stock_id);
+}
+
 static inline GtkWidget *
 gtkutil_box_new (GtkOrientation orientation, gboolean homogeneous, gint spacing)
 {
